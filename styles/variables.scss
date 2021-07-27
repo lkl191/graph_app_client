@@ -1,0 +1,13 @@
+$blue: #072335;
+$gray: #eee;
+$green: #c2ffcc;
+$red: #df7d50;
+$primary-title: #ccb036;
+$second-title: #96dadd;
+
+$breakpoints: (
+    'sm': 'screen and (max-width: 400px)',
+    'md': 'screen and (max-width: 768px)',
+    'lg': 'screen and (max-width: 1000px)',
+    'xl': 'screen and (max-width: 1200px)',
+) !default;

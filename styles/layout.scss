@@ -1,0 +1,44 @@
+.container {
+  margin: 10px auto;
+  max-width: 800px;
+  @include mq() {
+    margin: auto 20px;
+  }
+}
+.flex {
+  display: flex;
+}
+body{
+  margin: 0;
+}
+.button {
+  //color: $blue;
+  //padding: 10px;
+  width: 83px;
+  height: 39px;
+  border: none;
+  background-color: #fff;
+  border: .5px $green solid;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 7px;
+  &:hover {
+    background-color: $green;
+  }
+}
+.input_text {
+  //@include sizes(50%, auto);
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px $gray solid;
+  transition-duration: 0.2s;
+  &:hover{
+    border: 2px #aaa solid;
+  }
+  &:focus {
+    //padding: 11px;
+    border: 2px $green solid;
+    z-index: 10;
+    outline: 0;
+  }
+}

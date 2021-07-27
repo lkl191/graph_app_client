@@ -1,0 +1,38 @@
+.graph-single {
+  @include primary-title(auto);
+}
+.delete_button{
+  //@include sizes(100px, 50px);
+  border: 3px red solid;
+  float: right;
+  @include sizes(auto, auto);
+  padding: 10px 30px;
+  &:hover{
+    background-color: red;
+    //@include sizes(100px, 50px);
+    //border: 5px red solid;
+    color: white;
+    font-weight: bold;
+  }
+  @include mq() {
+    border: 2px red solid;
+    padding: 5px 10px;
+    font-size: 5px;
+  }
+}
+.category {
+  padding: 10px;
+  border: 1px $gray solid;
+  &:hover{
+    background-color: $gray;
+    border: 1px $gray solid;
+  }
+  @include mq() {
+    padding: 5px;
+    font-size: 10px;
+  }
+}
+.final_delete{
+  margin-left: auto;
+  margin-right: 5px;
+}

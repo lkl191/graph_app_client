@@ -1,0 +1,48 @@
+ul {
+  margin: 0;
+  padding: 0;
+}
+.graph-index {
+  @include primary-title(23px);
+  @include hover_object(black, white);
+  padding: 50px;
+  border: 3px $gray solid;
+  transition-duration: 0.4s;
+  //border-radius: 10px;
+  section {
+    font-size: 20px;
+  }
+  @include mq() {
+    padding: 40px;
+    margin: 10px auto;
+  }
+}
+a {
+  text-decoration: none;
+  &:link {
+    color: black;
+  }
+  &:visited {
+    color: black;
+  }
+}
+
+.other-title {
+  @include primary-title(30px);
+}
+.search{
+  //border: 2px $green solid;
+  background-color: $green;
+  //border: 2px $gray solid;
+  border-radius: 1;
+  &:hover{
+    background-color: white;
+    border: 3px $gray solid;
+  }
+}
+.search_input{
+  &:focus{
+    padding: 11px;
+    border: 1px $green solid;
+  }
+}
