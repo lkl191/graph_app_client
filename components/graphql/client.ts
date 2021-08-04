@@ -5,6 +5,7 @@ import {
   NormalizedCacheObject,
   from,
 } from "@apollo/client";
+
 //import { getDataFromTree } from "@apollo/client/react/ssr";
 import { onError } from "apollo-link-error";
 import { setContext } from "@apollo/client/link/context";
@@ -15,7 +16,7 @@ const cache = new InMemoryCache({});
 
 const httpLink = new HttpLink({
   //uri: "http://localhost:4000",
-  uri: "http://shishin.nara.jp:4000/",
+  uri: "https://genbu.shishin.nara.jp:4443/graphql",
 });
 
 
