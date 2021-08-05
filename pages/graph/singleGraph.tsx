@@ -109,8 +109,4 @@ const singleGraph = () => {
   );
 };
 
-const downloadImg = () => {
-  console.log("img");
-};
-
 export default singleGraph;

@@ -43,11 +43,11 @@ const About = () => {
         </ol>
       </div>
       <div>
-          <h3>使用したライブラリ</h3>
-          <ol>
-              <li>Chart.js（react-chartjs-2）</li>
-              <li>react-datasheet</li>
-          </ol>
+        <h3>使用したライブラリ</h3>
+        <ol>
+          <li>Chart.js（react-chartjs-2）</li>
+          <li>react-datasheet</li>
+        </ol>
       </div>
       <div>
         <h3>難しかったところ</h3>
@@ -55,12 +55,17 @@ const About = () => {
         <li>FirebaseとBackendの非同期通信</li>
         <li>Spread Sheetをどうするか</li>
       </div>
-      <div>
-        <h3>こだわったところ</h3>
-      </div>
-      <div>
-        <h3>githubのソースコード</h3>
-        <a href="https://github.com/lkl191/graph_app">https://github.com/lkl191/graph_app</a>
+      <div className="source">
+        <h3>ソースコード</h3>
+        <span>フロントエンド:</span>
+        <a href="https://github.com/lkl191/graph_app_client" target="blank">
+          https://github.com/lkl191/graph_app_client
+        </a>
+        <br />
+        <span>バックエンド:</span>
+        <a href="https://github.com/lkl191/graph-app-backend" target="blank">
+          https://github.com/lkl191/graph-app-backend
+        </a>
       </div>
     </div>
   );
