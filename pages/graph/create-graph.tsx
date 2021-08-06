@@ -104,7 +104,6 @@ const CreateGraph = () => {
             <option value="BAR">棒</option>
             <option value="PIE">円</option>
             <option value="RADAR">レーダー</option>
-            <option value="SCATTER">散布図</option>
           </select>
 
           <button type="submit" className="button create_btn">

@@ -1,15 +1,22 @@
 .container {
   margin: 10px auto;
-  max-width: 800px;
+  width: 800px;
+  flex: 1;
   @include mq() {
     margin: auto 20px;
+    width: auto;
   }
 }
 .flex {
   display: flex;
 }
-body{
+body {
   margin: 0;
+}
+#__next {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
 }
 .button {
   //color: $blue;
@@ -18,7 +25,7 @@ body{
   height: 39px;
   border: none;
   background-color: #fff;
-  border: .5px $green solid;
+  border: 0.5px $green solid;
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 7px;
@@ -32,7 +39,7 @@ body{
   border-radius: 5px;
   border: 2px $gray solid;
   transition-duration: 0.2s;
-  &:hover{
+  &:hover {
     border: 2px #aaa solid;
   }
   &:focus {

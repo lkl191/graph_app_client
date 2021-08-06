@@ -20,7 +20,7 @@
   //padding: 1rem;
   background: $gray;
   //display: inline-flex;
-  @include mq() {
+  @include mq(lg) {
     @include sizes(50%, auto);
   }
 }
@@ -68,6 +68,7 @@
 }
 .login_content{
   max-width: 221px;
+  width: 100%;
   text-align: center;
 }
 .signIn{

@@ -95,7 +95,11 @@ const Content = () => {
       </div>
     );
   } else {
-    return <p>Loading...</p>;
+    return (
+      <div className="loading">
+        <p>Loading...</p>
+      </div>
+    )
   }
 };
 

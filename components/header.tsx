@@ -28,7 +28,9 @@ const Header = () => {
             <a className="user-items button logined" >{user.displayName}</a>
             </Link>
           ): (
-            <span className="user-items button logined" >null</span>
+            <Link href={`/user?id=${user.uid}`} >
+            <a className="user-items button logined" >Anonymous</a>
+            </Link>
           )}
           <Link href={`/graph/create-graph`} >
             <a className="user-items button logined" >グラフ作成</a>

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-//import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import { useLazyQuery, useQuery } from "@apollo/client";
+import Image from "next/image";
 
-//import { Auth } from "../context/auth";
 import { ALL_GRAPHS, GRAPH_CATEGORY } from "./graphql/query";
 
 const GraphList = () => {
@@ -24,6 +23,25 @@ const GraphList = () => {
   );
 };
 
+export const graphImage = (graphKind) => {
+  let imagePath;
+  switch (graphKind) {
+    case "BAR":
+      imagePath = "/Graphs/bar.png";
+      break;
+    case "LINE":
+      imagePath = "/Graphs/line.png";
+      break;
+    case "PIE":
+      imagePath = "/Graphs/circle.png";
+      break;
+    case "RADAR":
+      imagePath = "/Graphs/radar.png";
+      break;
+  }
+  return imagePath;
+};
+
 const AllGraph = ({ props }) => {
   return (
     <div>
@@ -33,19 +51,22 @@ const AllGraph = ({ props }) => {
             <Link href={`/graph/singleGraph?id=${e.id}`}>
               <a>
                 <h3 className="graph-index">
-                  {e.title}
-                  <section>
-                    {e.user ? (
-                      <span>
-                        {/* 表示されない */}
-                        by {e.user.email}＞＞＞
+                  <div className="flex">
+                    <div className="graph_image">
+                      <Image
+                        src={graphImage(e.graphKind)}
+                        width="75"
+                        height="75"
+                      />
+                    </div>
+                    <div>
+                      <span className="graph_title">{e.title}</span>
+                      <br />
+                      <span className="graph_desc">
+                        {e.user ? <>{e.user.email}</> : <>Anonymous</>}
                       </span>
-                    ) : (
-                      <span>Anonymous＞＞＞</span>
-                    )}
-
-                    <span>{e.graphKind}</span>
-                  </section>
+                    </div>
+                  </div>
                 </h3>
               </a>
             </Link>
@@ -93,30 +114,33 @@ const GraphSort = () => {
               }
             })()}
           </p>
-          {props.map((e) => (
-            <div key={e.id}>
-              <Link href={`/graph/singleGraph?id=${e.id}`}>
-                <a>
-                  <h3 className="graph-index">
-                    {e.title}
-                    <section>
-                      {e.user ? (
-                        <span>
-                          {/* 表示されない */}
-                          by {e.user.email}＞＞＞
-                        </span>
-                      ) : (
-                        <span>Anonymous＞＞＞</span>
-                      )}
-
-                      <span>{e.graphKind}</span>
-                    </section>
-                  </h3>
-                </a>
-              </Link>
-              <br></br>
-            </div>
-          ))}
+        {props.map((e) => (
+          <div key={e.id}>
+            <Link href={`/graph/singleGraph?id=${e.id}`}>
+              <a>
+                <h3 className="graph-index">
+                  <div className="flex">
+                    <div className="graph_image">
+                      <Image
+                        src={graphImage(e.graphKind)}
+                        width="75"
+                        height="75"
+                      />
+                    </div>
+                    <div>
+                      <span className="graph_title">{e.title}</span>
+                      <br />
+                      <span className="graph_desc">
+                        {e.user ? <>{e.user.email}</> : <>Anonymous</>}
+                      </span>
+                    </div>
+                  </div>
+                </h3>
+              </a>
+            </Link>
+            <br></br>
+          </div>
+        ))}
           <hr />
           <hr />
         </>

@@ -9,11 +9,8 @@ ul {
   border: 3px $gray solid;
   transition-duration: 0.4s;
   //border-radius: 10px;
-  section {
-    font-size: 20px;
-  }
   @include mq() {
-    padding: 40px;
+    padding: 30px;
     margin: 10px auto;
   }
 }
@@ -25,6 +22,26 @@ a {
   &:visited {
     color: black;
   }
+}
+
+.graph_title{
+  font-size: 25px;
+  @include mq() {
+    font-size: 15px
+  }
+}
+
+.graph_desc {
+  font-size: 17px;
+  color: #bbb;
+  @include mq() {
+    font-size: 15px;
+  }
+}
+.graph_image{
+  background-color: #fff;
+  display: block;
+  margin-right: 30px;
 }
 
 .other-title {
