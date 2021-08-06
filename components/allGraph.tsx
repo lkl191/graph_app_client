@@ -61,10 +61,6 @@ const AllGraph = ({ props }) => {
                     </div>
                     <div>
                       <span className="graph_title">{e.title}</span>
-                      <br />
-                      <span className="graph_desc">
-                        {e.user ? <>{e.user.email}</> : <>Anonymous</>}
-                      </span>
                     </div>
                   </div>
                 </h3>
@@ -130,9 +126,6 @@ const GraphSort = () => {
                     <div>
                       <span className="graph_title">{e.title}</span>
                       <br />
-                      <span className="graph_desc">
-                        {e.user ? <>{e.user.email}</> : <>Anonymous</>}
-                      </span>
                     </div>
                   </div>
                 </h3>
