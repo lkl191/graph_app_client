@@ -60,10 +60,6 @@ const CreateGraph = () => {
   };
   generateGrid();
 
-  interface inputDataType {
-    useDataForm({ label: [], value: [] });
-  }
-
   //1
   const { inputData, dataChange }: any = useDataForm({
     label: ["test01", "test02", "test03"],

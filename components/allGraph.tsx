@@ -110,30 +110,30 @@ const GraphSort = () => {
               }
             })()}
           </p>
-        {props.map((e) => (
-          <div key={e.id}>
-            <Link href={`/graph/singleGraph?id=${e.id}`}>
-              <a>
-                <h3 className="graph-index">
-                  <div className="flex">
-                    <div className="graph_image">
-                      <Image
-                        src={graphImage(e.graphKind)}
-                        width="75"
-                        height="75"
-                      />
+          {props.map((e) => (
+            <div key={e.id}>
+              <Link href={`/graph/singleGraph?id=${e.id}`}>
+                <a>
+                  <h3 className="graph-index">
+                    <div className="flex">
+                      <div className="graph_image">
+                        <Image
+                          src={graphImage(e.graphKind)}
+                          width="75"
+                          height="75"
+                        />
+                      </div>
+                      <div>
+                        <span className="graph_title">{e.title}</span>
+                        <br />
+                      </div>
                     </div>
-                    <div>
-                      <span className="graph_title">{e.title}</span>
-                      <br />
-                    </div>
-                  </div>
-                </h3>
-              </a>
-            </Link>
-            <br></br>
-          </div>
-        ))}
+                  </h3>
+                </a>
+              </Link>
+              <br></br>
+            </div>
+          ))}
           <hr />
           <hr />
         </>
