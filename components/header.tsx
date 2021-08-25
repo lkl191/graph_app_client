@@ -16,11 +16,6 @@ const Header = () => {
           <a className="button app_name_text">GraphApp</a>
         </Link>
       </div>
-      <div className="about_div">
-        <Link href="/about">
-          <a className="button about">About</a>
-        </Link>
-      </div>
       {user ? (
         <div className="user">
           {user.displayName ? (
