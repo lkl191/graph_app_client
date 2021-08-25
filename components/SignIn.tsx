@@ -169,7 +169,7 @@ const SignInModal = ({ show, setShow }) => {
       <div id="overlay">
         <div id="content" className="login_content">
           <div>
-          <button
+            <button
               onClick={signInWithGoogle}
               className="button sso google_sso"
             >
@@ -217,10 +217,9 @@ const SignInModal = ({ show, setShow }) => {
             <button onClick={() => setShow(false)} className="close button">
               閉じる
             </button>
-            
           </form>
         </div>
-        </div>
+      </div>
     );
   } else if (!show) {
     return null;
@@ -238,11 +237,11 @@ const SignIn = () => {
   };
   return (
     <div className="user">
-      <button onClick={openSignInModal} className="signUp user-items button">
+      <button onClick={openSignInModal} className="user-items button">
         Sign Up
       </button>
       <SignInModal show={signInShow} setShow={setSigInShow} />
-      <button onClick={openModal} className="signUp user-items button">
+      <button onClick={openModal} className="user-items button">
         Sign In
       </button>
       <LoginModal show={show} setShow={setShow} />
