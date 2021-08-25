@@ -9,6 +9,7 @@ import { useForm } from "../utils/hooks";
 
 const LoginModal = ({ show, setShow }) => {
   const [addUser] = useMutation(LOGIN);
+
   //Google
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -25,6 +26,7 @@ const LoginModal = ({ show, setShow }) => {
       }
     });
   };
+
   //Github
   const signInWithGithub = async () => {
     const provider = new firebase.auth.GithubAuthProvider();
@@ -88,10 +90,10 @@ const LoginModal = ({ show, setShow }) => {
 };
 
 type inputType = {
-  input,//{email:String, password:String},
-  onChange: (event) => void,
-  onSubmit: (event) => void
-}
+  input; //{email:String, password:String},
+  onChange: (event) => void;
+  onSubmit: (event) => void;
+};
 
 const SignInModal = ({ show, setShow }) => {
   let email;
@@ -100,6 +102,43 @@ const SignInModal = ({ show, setShow }) => {
     email: "",
     password: "",
   });
+
+  const [addUser] = useMutation(LOGIN);
+
+  //Google
+  const signInWithGoogle = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await Auth.signInWithPopup(provider);
+    //Mutation Login
+    await Auth.onAuthStateChanged((user) => {
+      console.log(user.email);
+      if (user) {
+        user.getIdToken(true).then(async (token) => {
+          const idToken = token;
+          console.log(idToken);
+          await addUser();
+        });
+      }
+    });
+  };
+
+  //Github
+  const signInWithGithub = async () => {
+    const provider = new firebase.auth.GithubAuthProvider();
+    await Auth.signInWithPopup(provider);
+    //Mutation Login
+    await Auth.onAuthStateChanged((user) => {
+      console.log(user.email);
+      if (user) {
+        user.getIdToken(true).then(async (token) => {
+          const idToken = token;
+          console.log(idToken);
+          await addUser();
+        });
+      }
+    });
+  };
+
   function callback() {
     //console.log(input.email)
     email = input.email;
@@ -129,6 +168,35 @@ const SignInModal = ({ show, setShow }) => {
     return (
       <div id="overlay">
         <div id="content" className="login_content">
+          <div>
+          <button
+              onClick={signInWithGoogle}
+              className="button sso google_sso"
+            >
+              <Image
+                src="/ios/2x/btn_google_dark_pressed_ios@2x.png"
+                alt="Sign in with google"
+                width="32"
+                height="32"
+              />
+              <p>Sign Up with google</p>
+            </button>
+          </div>
+          <div>
+            <br></br>
+            <button
+              onClick={signInWithGithub}
+              className="button sso github_sso"
+            >
+              <Image
+                src="/PNG/GitHub-Mark-32px.png"
+                alt="Sign in with github"
+                width="32"
+                height="32"
+              />
+              <p>Sign Up with github</p>
+            </button>
+          </div>
           <form onSubmit={onSubmit}>
             <input
               type="text"
@@ -144,13 +212,15 @@ const SignInModal = ({ show, setShow }) => {
               value={input.password}
               onChange={onChange}
             ></input>
-            <button className="button signIn">Sign In</button>
+
+            <button className="button signIn">Sign Up</button>
             <button onClick={() => setShow(false)} className="close button">
               閉じる
             </button>
+            
           </form>
         </div>
-      </div>
+        </div>
     );
   } else if (!show) {
     return null;
@@ -168,12 +238,12 @@ const SignIn = () => {
   };
   return (
     <div className="user">
-      <button onClick={openSignInModal} className="login user-items button">
-        Sign In
+      <button onClick={openSignInModal} className="signUp user-items button">
+        Sign Up
       </button>
       <SignInModal show={signInShow} setShow={setSigInShow} />
-      <button onClick={openModal} className="login user-items button">
-        ログイン
+      <button onClick={openModal} className="signUp user-items button">
+        Sign In
       </button>
       <LoginModal show={show} setShow={setShow} />
     </div>

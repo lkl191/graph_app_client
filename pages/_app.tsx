@@ -11,8 +11,6 @@ import Meta from "../components/meta";
 import * as gtag from '../lib/gtag'
 import router from "next/router";
 
-
-//_app.jsは二回レンダリングされる
 const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const handleRouteChange = (url) => {
