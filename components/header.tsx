@@ -7,11 +7,11 @@ import SignIn from "../components/SignIn";
 import SignOut from "../components/SignOut";
 
 const Header = () => {
-  const [user] = useAuthState(Auth)
+  const [user] = useAuthState(Auth);
 
   return (
     <div className="header">
-      <div className="app_name" >
+      <div className="app_name">
         <Link href="/">
           <a className="button app_name_text">GraphApp</a>
         </Link>
@@ -19,18 +19,18 @@ const Header = () => {
       {user ? (
         <div className="user">
           {user.displayName ? (
-            <Link href={`/user?id=${user.uid}`} >
-            <a className="user-items button logined" >{user.displayName}</a>
+            <Link href={`/user?id=${user.uid}`}>
+              <a className="user-items button logined">{user.displayName}</a>
             </Link>
-          ): (
-            <Link href={`/user?id=${user.uid}`} >
-            <a className="user-items button logined" >Anonymous</a>
+          ) : (
+            <Link href={`/user?id=${user.uid}`}>
+              <a className="user-items button logined">Anonymous</a>
             </Link>
           )}
-          <Link href={`/graph/create-graph`} >
-            <a className="user-items button logined" >グラフ作成</a>
+          <Link href={`/graph/create-graph`}>
+            <a className="user-items button logined">グラフ作成</a>
           </Link>
-          <span className="user-items " >
+          <span className="user-items ">
             <SignOut />
           </span>
         </div>

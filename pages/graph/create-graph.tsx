@@ -6,8 +6,11 @@ import { CREATE_GRAPH } from "../../components/graphql/mutation";
 import { useForm, useDataForm } from "../../utils/hooks";
 import PreviewGraph from "../../components/preview/preview-graph";
 import "react-datasheet/lib/react-datasheet.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Auth } from "../../context/auth";
 
 const CreateGraph = () => {
+  const [user] = useAuthState(Auth);
   //1.Stateを作る
   const { input, onChange, onSubmit }: any = useForm(createGraphCallback, {
     title: "",
@@ -73,39 +76,51 @@ const CreateGraph = () => {
   if (process.browser) {
     return (
       <div className="container">
-        <form onSubmit={onSubmit}>
-          <h2>create a graph</h2>
+        {!user && <p className="attention">ログインしてください。</p>}
+        <h2>create a graph</h2>
+        <input
+          placeholder="title"
+          className="input_text"
+          name="title"
+          value={input.title}
+          onChange={onChange}
+        />
+        <input
+          placeholder="category"
+          className="input_text"
+          name="category"
+          value={input.category}
+          onChange={onChange}
+        />
+        <select
+          name="graphKind"
+          value={input.graphKind}
+          onChange={onChange}
+          className="graphKind"
+        >
+          <option value="LINE">折れ線</option>
+          <option value="BAR">棒</option>
+          <option value="PIE">円</option>
+          <option value="RADAR">レーダー</option>
+        </select>
 
-          <input
-            placeholder="title"
-            className="input_text"
-            name="title"
-            value={input.title}
-            onChange={onChange}
-          />
-          <input
-            placeholder="category"
-            className="input_text"
-            name="category"
-            value={input.category}
-            onChange={onChange}
-          />
-          <select
-            name="graphKind"
-            value={input.graphKind}
-            onChange={onChange}
-            className="graphKind"
-          >
-            <option value="LINE">折れ線</option>
-            <option value="BAR">棒</option>
-            <option value="PIE">円</option>
-            <option value="RADAR">レーダー</option>
-          </select>
-
-          <button type="submit" className="button create_btn">
-            create
-          </button>
-        </form>
+        <button
+          type="submit"
+          className={[
+            "button create_btn",
+            !user && 'click_invalid'
+          ].join(' ')}
+          onClick={(e) => {
+            if (user) {
+              onSubmit(e);
+            } else {
+              console.log("baka");
+              return <p>ログインしてください。</p>;
+            }
+          }}
+        >
+          create
+        </button>
 
         <PreviewGraph props={input} inputData={inputData} />
 

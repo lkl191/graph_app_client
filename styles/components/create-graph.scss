@@ -1,9 +1,18 @@
-.graphKind{
-    transition-duration: 0.4s;
-    padding: 6px;
-    border-radius: 2px;
+.graphKind {
+  transition-duration: 0.4s;
+  padding: 6px;
+  border-radius: 2px;
 }
 
-.create_btn{
-    float: right;
+.create_btn {
+  float: right;
+}
+
+.click_invalid {
+  cursor: not-allowed;
+}
+
+.attention {
+  color: red;
+  text-align: center;
 }

@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client";
 import { Auth } from "../context/auth";
 import { LOGIN, SIGNIN } from "./graphql/mutation";
 import { useForm } from "../utils/hooks";
+import Link from "next/link";
 
 const LoginModal = ({ show, setShow }) => {
   const [addUser] = useMutation(LOGIN);
@@ -237,6 +238,9 @@ const SignIn = () => {
   };
   return (
     <div className="user">
+      <Link href={`/graph/create-graph`}>
+        <a className="user-items button logined">グラフ作成</a>
+      </Link>
       <button onClick={openSignInModal} className="user-items button">
         Sign Up
       </button>
