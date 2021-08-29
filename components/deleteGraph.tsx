@@ -12,8 +12,8 @@ const DeleteGraphProps = ({ id, show, setShow }) => {
   });
   if (show) {
     return (
-      <div id="overlay">
-        <div id="content" >
+      <div id="overlay_delete">
+        <div id="content_delete" >
           <p>本当に削除しますか？</p>
           <div className="flex">
             <div className="final_delete">
