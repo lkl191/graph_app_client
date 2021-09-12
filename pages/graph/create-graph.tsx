@@ -16,6 +16,7 @@ const CreateGraph = () => {
     title: "",
     category: "",
     graphKind: "LINE",
+    source: [""],
     label: [""],
     value: [0],
   });
@@ -26,7 +27,6 @@ const CreateGraph = () => {
     //Mutationの実行後
     onCompleted() {
       location.href = "/";
-      //router.push("/")
       console.log("graph is created");
     },
   });
@@ -43,6 +43,7 @@ const CreateGraph = () => {
     for (let i = 0; i < props.length; i++) {
       input.value[i] = Number(props[i]);
     }
+    input.source = [input.source]
     console.log(input);
     createGraph();
   }
@@ -69,9 +70,6 @@ const CreateGraph = () => {
     value: [0, 1, 2],
   });
   const [dataSh, setDataSh] = useState(grid);
-
-  //promise(onSubmit, dataSubmit)
-  //console.log(input)
 
   if (process.browser) {
     return (
@@ -106,10 +104,7 @@ const CreateGraph = () => {
 
         <button
           type="submit"
-          className={[
-            "button create_btn",
-            !user && 'click_invalid'
-          ].join(' ')}
+          className={["button create_btn", !user && "click_invalid"].join(" ")}
           onClick={(e) => {
             if (user) {
               onSubmit(e);
@@ -123,6 +118,16 @@ const CreateGraph = () => {
         </button>
 
         <PreviewGraph props={input} inputData={inputData} />
+
+        <div>
+          <input
+            placeholder="source URL"
+            className="input_text"
+            name="source"
+            value={input.source}
+            onChange={onChange}
+          />
+        </div>
 
         <ReactDataSheet
           data={dataSh}

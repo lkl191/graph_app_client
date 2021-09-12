@@ -4,8 +4,9 @@ import { gql } from "@apollo/client";
 export const CREATE_GRAPH = gql`
   mutation createGraph(
     $title: String!
-    $graphKind: GraphKind
+    $graphKind: GraphKind!
     $category: String!
+    $source: [String]
     $label: [String]
     $value: [Int]
   ) {
@@ -14,6 +15,7 @@ export const CREATE_GRAPH = gql`
         title: $title
         graphKind: $graphKind
         category: $category
+        source: $source
         label: $label
         value: $value
       }
@@ -22,6 +24,7 @@ export const CREATE_GRAPH = gql`
       title
       graphKind
       category
+      source
     }
   }
 `;

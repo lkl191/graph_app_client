@@ -26,32 +26,32 @@
     @include sizes(50%, auto);
   }
 }
-.sso{
+.sso {
   @include sizes(100%, auto);
   border-radius: 0;
   border: none;
   padding: 3px 10px;
   display: flex;
-  &:hover{
+  &:hover {
     background-color: $gray;
   }
-  p{
+  p {
     margin: auto;
   }
 }
-.google_sso{
+.google_sso {
   background-color: aqua;
 }
-.github_sso{
+.github_sso {
   background-color: #fff;
   color: black;
   margin-bottom: 20px;
-  &:hover{
+  &:hover {
     color: white;
     background-color: #555;
   }
 }
-.close{
+.close {
   margin-top: 10px;
 }
 
@@ -60,27 +60,27 @@
   margin-right: 10px;
   padding: 0;
 }
-.logout{
+.logout {
   @include sizes(auto, auto);
 }
-.logined{
+.logined {
   padding: 10px;
   @include mq() {
     padding: 5px;
     font-size: 50%;
   }
 }
-.login_content{
+.login_content {
   max-width: 221px;
   width: 100%;
   text-align: center;
 }
-.signIn{
+.signIn {
   margin-right: 10px;
 }
-.veri_delete{
+.veri_delete {
   border: 2px red solid;
-  &:hover{
+  &:hover {
     background-color: red;
     color: white;
     font-weight: bold;

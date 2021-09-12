@@ -7,6 +7,7 @@ export const ALL_GRAPHS = gql`
       title
       category
       graphKind
+      source
       user {
         username
         email
@@ -35,6 +36,7 @@ export const SINGLE_GRAPH = gql`
       title
       category
       graphKind
+      source
       user {
         _id
         username

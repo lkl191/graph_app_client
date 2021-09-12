@@ -19,12 +19,11 @@ export const useForm = (callback, initialState = {}) => {
   };
 };
 
-
-export const useDataForm = ( initialState = {}) => {
+export const useDataForm = (initialState = {}) => {
   const [inputData, setValues] = useState(initialState);
 
   const dataChange = (event) => {
-    console.log(event)
+    console.log(event);
     let tmp = {
       label: [],
       value: [],

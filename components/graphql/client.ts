@@ -29,7 +29,7 @@ const authLink = setContext(async (_, { headers }) => {
       .getIdToken(true)
       .then((idToken) => {
         console.log("set token")
-        console.log(idToken);
+        //console.log(idToken);
         token = idToken;
       })
       .catch((err) => {

@@ -28,13 +28,13 @@
 .graph-single {
   @include primary-title(auto);
 }
-.delete_button{
+.delete_button {
   //@include sizes(100px, 50px);
   border: 3px red solid;
   float: right;
   @include sizes(auto, auto);
   padding: 10px 30px;
-  &:hover{
+  &:hover {
     background-color: red;
     //@include sizes(100px, 50px);
     //border: 5px red solid;
@@ -50,7 +50,7 @@
 .category {
   padding: 10px;
   border: 1px $gray solid;
-  &:hover{
+  &:hover {
     background-color: $gray;
     border: 1px $gray solid;
   }
@@ -59,10 +59,35 @@
     font-size: 10px;
   }
 }
-.final_delete{
+.final_delete {
   margin-left: auto;
   margin-right: 5px;
 }
-.loading{
+.loading {
   height: 100vh;
+}
+
+.href {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.change_btn {
+  //@include sizes(100px, 50px);
+  border: 3px $green solid;
+  @include sizes(auto, auto);
+  padding: 10px 30px;
+  &:hover {
+    background-color: $green;
+  }
+  @include mq() {
+    border: 2px $green solid;
+    padding: 5px 10px;
+    font-size: 5px;
+  }
+}
+
+.right {
+  float: right;
 }
