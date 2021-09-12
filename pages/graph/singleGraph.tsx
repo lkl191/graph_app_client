@@ -68,17 +68,6 @@ const Content = () => {
             return <ScatterGraph props={props} />;
           }
         })()}
-        {/* 
-        <button
-          className="button"
-          onClick={() => {
-            downloadImg();
-          }}
-          id="download"
-        >
-          保存
-        </button>
-         */}
         <DataSheet props={props} />
         <div>
           {props.source[0] ? (
@@ -134,11 +123,6 @@ const HostContent = () => {
       <div>
         <br></br>
         <h1 className="graph-single">{props.title}</h1>
-        {/*
-        <Link href={`/`}>
-          <a className="button category">{props.category}</a>
-        </Link>
-         */}
         {userExact && <DeleteModal />}
 
         {(() => {

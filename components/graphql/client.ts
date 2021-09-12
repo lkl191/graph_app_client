@@ -19,9 +19,6 @@ const httpLink = new HttpLink({
   uri: "https://genbu.shishin.nara.jp:4443/graphql",
 });
 
-
-
-
 const authLink = setContext(async (_, { headers }) => {
   let token;
   if (Auth.currentUser) {
