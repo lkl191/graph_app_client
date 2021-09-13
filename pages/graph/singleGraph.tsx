@@ -79,7 +79,7 @@ const Content = () => {
               </a>
             </p>
           ) : (
-            <p>not URL</p>
+            <p>source URL not found</p>
           )}
         </div>
       </div>
@@ -154,7 +154,7 @@ const HostContent = () => {
               )}
             </p>
           ) : (
-            <p>not URL</p>
+            <p>source URL not found</p>
           )}
         </div>
       </div>
