@@ -5,7 +5,7 @@ ul {
 .graph-index {
   @include primary-title(23px);
   @include hover_object(black, white);
-  padding: 50px;
+  padding: $index-padding;
   border: 3px $gray solid;
   transition-duration: 0.4s;
   //border-radius: 10px;
@@ -25,7 +25,7 @@ a {
 }
 
 .graph_title{
-  font-size: 25px;
+  font-size: $index-title;
   @include mq() {
     font-size: 15px
   }

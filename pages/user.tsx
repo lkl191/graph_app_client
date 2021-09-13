@@ -9,10 +9,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "../context/auth";
 import { graphImage } from "../components/allGraph";
 
-
 const User = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);
   const [user] = useAuthState(Auth);
+  console.log("object");
 
   //更新で発火
   useEffect(() => {
@@ -54,6 +54,11 @@ const User = () => {
             <br></br>
           </div>
         ))}
+        <Link href={`/graph/create-graph`}>
+          <a>
+            <div className="crt_graph">＋ グラフ作成</div>
+          </a>
+        </Link>
       </div>
     );
   } else {

@@ -1,0 +1,9 @@
+.crt_graph {
+    border: 2px dashed black;
+    text-align: center;
+    font-size: $index-title;
+    padding: $index-padding;
+    &:hover {
+        background-color: $gray;
+    }
+}
