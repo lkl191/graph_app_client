@@ -65,8 +65,9 @@ const CreateGraph = () => {
   generateGrid();
 
   //1
+  // データの初期値
   const { inputData, dataChange }: any = useDataForm({
-    label: ["test01", "test02", "test03"],
+    label: ["test00", "test01", "test02"],
     value: [0, 1, 2],
   });
   const [dataSh, setDataSh] = useState(grid);
