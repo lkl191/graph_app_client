@@ -17,8 +17,7 @@ import Test from "../../components/test";
 import { Bar } from "react-chartjs-2";
 import { DatasetsType } from "../../types/types";
 
-const NewCreateGraph = () => {
-  const [user] = useAuthState(Auth);
+const NewCreateGraph = ({ user }) => {
   //1.Stateを作る
   const { input, onChange, onSubmit }: any = useForm(createGraphCallback, {
     title: "",
@@ -80,7 +79,6 @@ const NewCreateGraph = () => {
 
   return (
     <div className="container">
-      {!user && <p className="attention">ログインしてください。</p>}
       <h2>新規グラフ作成</h2>
       <input
         placeholder="title"
@@ -153,7 +151,7 @@ const NewCreateGraph = () => {
   );
 };
 
-const BlendCreateGraph = () => {
+const BlendCreateGraph = ({ user }) => {
   let graphInfo;
   const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
     id: "",
@@ -230,7 +228,6 @@ const BlendCreateGraph = () => {
   };
 
   const genDatasets = () => {
-    
     let datasets = [];
 
     for (let i = 0; i < dataArray.length; i++) {
@@ -256,11 +253,10 @@ const BlendCreateGraph = () => {
     <div className="container">
       <form onSubmit={onSubmit}>
         <div id="blend_graph">
-          <button className="button" onSubmit={onSubmit}>
-            グラフ検索
-          </button>
           <button
-            className="button"
+            className={["button create_btn", !user && "click_invalid"].join(
+              " "
+            )}
             onClick={() => {
               createBlendGraph();
             }}
@@ -268,13 +264,22 @@ const BlendCreateGraph = () => {
             作成
           </button>
           <br />
-          <input name="id" placeholder="graphId" onChange={onChange} />
+
           <input
             type="text"
+            placeholder="title"
+            className="input_text"
             onChange={(e: any) => {
               setTitle(e.target.value);
             }}
           />
+          <br />
+          <input name="id" placeholder="graphId" className="input_text" onChange={onChange} />
+
+          <button className="button" onSubmit={onSubmit}>
+            グラフ検索
+          </button>
+
           {data && <Bar data={datasets} type="Bar" />}
         </div>
       </form>
@@ -283,6 +288,7 @@ const BlendCreateGraph = () => {
 };
 
 const CreateGraph = () => {
+  const [user] = useAuthState(Auth);
   type CreateGraphType = "NEW" | "BLEND";
   const [change, setChange] = useState<CreateGraphType>("NEW");
   const changeCreateGraph = (e) => {
@@ -293,7 +299,7 @@ const CreateGraph = () => {
       <>
         <div>
           <button
-            className="button change_create_graph"
+            className="button"
             name="NEW"
             onClick={changeCreateGraph}
           >
@@ -301,18 +307,20 @@ const CreateGraph = () => {
           </button>
           <button
             name="BLEND"
-            className="button change_create_graph"
+            className="button"
             onClick={changeCreateGraph}
           >
             グラフを重ねる
           </button>
         </div>
+
+        {!user && <p className="attention">ログインしてください。</p>}
         {(() => {
           switch (change) {
             case "NEW":
-              return <NewCreateGraph />;
+              return <NewCreateGraph user={user} />;
             case "BLEND":
-              return <BlendCreateGraph />;
+              return <BlendCreateGraph user={user} />;
           }
         })()}
       </>

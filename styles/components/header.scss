@@ -1,4 +1,5 @@
 .user {
+  display: flex;
   margin: auto;
   margin-right: 0;
   @include mq() {

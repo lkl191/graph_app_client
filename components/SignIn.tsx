@@ -235,7 +235,7 @@ const SignIn = () => {
       <Link href={`/graph/create-graph`}>
         <a className="user-items button logined">グラフ作成</a>
       </Link>
-      <button onClick={openSignInModal} className="user-items button ">
+      <button onClick={openSignInModal} className="user-items button">
         Sign Up
       </button>
       <SignInModal show={signInShow} setShow={setSigInShow} />
