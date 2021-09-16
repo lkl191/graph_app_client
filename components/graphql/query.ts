@@ -50,6 +50,31 @@ export const SINGLE_GRAPH = gql`
   }
 `;
 
+export const SINGLE_BLEND_GRAPH = gql`
+  query singleBlendGraph($id: ID!) {
+    singleBlendGraph(id: $id) {
+      id
+      title
+      graphs {
+        title
+        graphKind
+        source
+        user {
+          username
+          email
+        }
+        data {
+          label
+          value
+        }
+      }
+    }
+  }
+`;
+/*
+    
+*/
+
 export const MY_GRAPHS = gql`
   query myGraphs($userId: String) {
     myGraphs(userId: $userId) {
@@ -86,6 +111,16 @@ export const GRAPH_CATEGORY = gql`
         label
         value
       }
+    }
+  }
+`;
+
+export const ALL_BLEND_GRAPH = gql`
+  query allBlendGraphs {
+    allBlendGraphs {
+      id
+      graphId
+      title
     }
   }
 `;

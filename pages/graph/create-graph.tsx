@@ -2,7 +2,10 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import ReactDataSheet from "react-datasheet";
 
-import { CREATE_GRAPH } from "../../components/graphql/mutation";
+import {
+  CREATE_BLEND_GRAPH,
+  CREATE_GRAPH,
+} from "../../components/graphql/mutation";
 import { useForm, useDataForm } from "../../utils/hooks";
 import PreviewGraph from "../../components/preview/preview-graph";
 import "react-datasheet/lib/react-datasheet.css";
@@ -12,6 +15,7 @@ import { SINGLE_GRAPH } from "../../components/graphql/query";
 import PreviewBlend from "../../components/preview/previewBlend";
 import Test from "../../components/test";
 import { Bar } from "react-chartjs-2";
+import { DatasetsType } from "../../types/types";
 
 const NewCreateGraph = () => {
   const [user] = useAuthState(Auth);
@@ -151,15 +155,35 @@ const NewCreateGraph = () => {
 
 const BlendCreateGraph = () => {
   let graphInfo;
-  const { input, onChange, onSubmit }: any = useForm(createBlendCallback, {
+  const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
     id: "",
   });
 
-  const [createBlend, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
+  const [blendGraphSet, { data }] = useLazyQuery(SINGLE_GRAPH, {
     variables: { id: input.id },
   });
 
+  const [idArray, setIdArray] = useState([]);
+  const [title, setTitle] = useState();
+
+  const [createBlendGraph, { error }] = useMutation(CREATE_BLEND_GRAPH, {
+    variables: {
+      graphId: idArray,
+      title,
+    },
+  });
+
+  useEffect(() => {
+    if (input.id) {
+      setIdArray([...idArray, input.id]);
+    }
+  }, [input.id]);
+
   let [dataArray, setDataArray] = useState([]);
+
+  function blendGraphSetCallback() {
+    blendGraphSet();
+  }
 
   let [graphData, setGraphData] = useState([
     {
@@ -191,12 +215,8 @@ const BlendCreateGraph = () => {
     }
   }, [data]);
 
-  console.log(dataArray);
-  console.log(graphData);
-
-  function createBlendCallback() {
-    createBlend();
-  }
+  //console.log(dataArray);
+  //console.log(graphData)
 
   if (error) console.log(error.message);
 
@@ -210,12 +230,7 @@ const BlendCreateGraph = () => {
   };
 
   const genDatasets = () => {
-    type DatasetsType = {
-      type: string;
-      data: any[];
-      label: string;
-      backgroundColor: string;
-    };
+    
     let datasets = [];
 
     for (let i = 0; i < dataArray.length; i++) {
@@ -229,11 +244,8 @@ const BlendCreateGraph = () => {
       datasets.push(newData); //新しいグラフのデータ
     }
 
-    console.log(datasets);
-
     return datasets;
   };
-  genDatasets();
 
   const datasets = {
     labels: genLabels(),
@@ -244,13 +256,25 @@ const BlendCreateGraph = () => {
     <div className="container">
       <form onSubmit={onSubmit}>
         <div id="blend_graph">
-          <p>{input.id}</p>
           <button className="button" onSubmit={onSubmit}>
             グラフ検索
           </button>
-          <button className="button">作成</button>
+          <button
+            className="button"
+            onClick={() => {
+              createBlendGraph();
+            }}
+          >
+            作成
+          </button>
           <br />
           <input name="id" placeholder="graphId" onChange={onChange} />
+          <input
+            type="text"
+            onChange={(e: any) => {
+              setTitle(e.target.value);
+            }}
+          />
           {data && <Bar data={datasets} type="Bar" />}
         </div>
       </form>
@@ -261,23 +285,24 @@ const BlendCreateGraph = () => {
 const CreateGraph = () => {
   type CreateGraphType = "NEW" | "BLEND";
   const [change, setChange] = useState<CreateGraphType>("NEW");
+  const changeCreateGraph = (e) => {
+    setChange(e.target.name);
+  };
   if (process.browser) {
     return (
       <>
         <div>
           <button
-          className="button"
-            onClick={() => {
-              setChange("NEW");
-            }}
+            className="button change_create_graph"
+            name="NEW"
+            onClick={changeCreateGraph}
           >
             新規グラフ作成
           </button>
           <button
-          className="button"
-            onClick={() => {
-              setChange("BLEND");
-            }}
+            name="BLEND"
+            className="button change_create_graph"
+            onClick={changeCreateGraph}
           >
             グラフを重ねる
           </button>
@@ -285,9 +310,9 @@ const CreateGraph = () => {
         {(() => {
           switch (change) {
             case "NEW":
-              return  <NewCreateGraph />
+              return <NewCreateGraph />;
             case "BLEND":
-              return <BlendCreateGraph />
+              return <BlendCreateGraph />;
           }
         })()}
       </>

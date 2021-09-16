@@ -16,4 +16,12 @@ export type IdType = {
     id: string
 }
 
+export type DatasetsType = {
+    type: string;
+    data: any[];
+    label: string;
+    backgroundColor: string;
+  };
+
+
 type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR"

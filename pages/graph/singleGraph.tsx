@@ -31,8 +31,6 @@ const DeleteModal = () => {
 };
 
 const Content = () => {
-  const [user] = useAuthState(Auth);
-
   const router = useRouter();
   const id = router.query.id;
   let props, kind;

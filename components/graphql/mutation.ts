@@ -1,5 +1,23 @@
 import { gql } from "@apollo/client";
 
+export const CREATE_BLEND_GRAPH = gql`
+  mutation createBlendGraph(
+    $title: String
+    $graphId: [String]
+  ) {
+    createBlendGraph(
+      inputBlendGraph: {
+        title: $title
+        graphId: $graphId
+      }
+    ) {
+      id
+      title
+      graphId
+    }
+  }
+`
+
 //enum型はそのままでok
 export const CREATE_GRAPH = gql`
   mutation createGraph(

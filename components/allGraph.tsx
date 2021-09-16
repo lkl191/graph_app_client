@@ -43,6 +43,7 @@ export const graphImage = (graphKind) => {
 };
 
 const AllGraph = ({ props }) => {
+  console.log(props)
   return (
     <div>
       <>
