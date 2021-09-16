@@ -59,15 +59,16 @@
   display: block;
   margin: auto;
   margin-left: 10px;
-}
-.logout {
-  @include sizes(auto, auto);
+  @include mq() {
+    display: inline-block;
+  }
 }
 .logined {
   padding: 10px;
   @include mq() {
-    padding: 7px;
-    font-size: 100%;
+    //margin: 0;
+    //width: auto;
+    //font-size: 50%;
   }
 }
 .login_content {

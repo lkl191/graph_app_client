@@ -4,7 +4,7 @@ import { Auth } from "../context/auth";
 
 const SignOut = () => {
     return Auth.currentUser && (
-        <button onClick={() => Auth.signOut()} className="logined button logout" >ログアウト</button>
+        <button onClick={() => Auth.signOut()} className="button user-items logined" >ログアウト</button>
     )
 }
 

@@ -31,6 +31,9 @@ body {
   &:hover {
     background-color: $green;
   }
+  @include mq() {
+    font-size: 50%;
+  }
 }
 .input_text {
   //@include sizes(50%, auto);
