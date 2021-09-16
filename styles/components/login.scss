@@ -66,8 +66,8 @@
 .logined {
   padding: 10px;
   @include mq() {
-    padding: 5px;
-    font-size: 50%;
+    padding: 7px;
+    font-size: 100%;
   }
 }
 .login_content {
