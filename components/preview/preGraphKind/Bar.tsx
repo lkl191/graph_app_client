@@ -1,8 +1,9 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-const PreviewBar = ({ props, inputData }) => {
-  
+const PreviewBar = ({ graphInfo, inputData }) => {
+
+  const color = `192, 192, 192`
 
   const graphData = {
     // 軸ラベル
@@ -12,10 +13,12 @@ const PreviewBar = ({ props, inputData }) => {
       // 表示するデータセット
       {
         data: inputData.value,
-        label: props.title,
+        label: graphInfo.title,
+        backgroundColor: `rgba(${color},0.4)`,
       },
     ],
   };
+
   return (
     <div>
       <Bar type="Bar" data={graphData} />

@@ -54,7 +54,7 @@ const Content = () => {
       <div>
         <br></br>
         <h1 className="graph-single">{props.title}</h1>
-
+        <p>{props.id}</p>
         {(() => {
           if (kind == "BAR") {
             return <BarGraph props={props} />;
@@ -70,12 +70,12 @@ const Content = () => {
         })()}
         <DataSheet props={props} />
         <div>
-          {props.source[0] ? (
+          {props.source ? (
             <p>
               source URL
               <br />
-              <a href={`${props.source[0]}`} target="blank">
-                <span className="href">{props.source[0]}</span>
+              <a href={`${props.source}`} target="blank">
+                <span className="href">{props.source}</span>
               </a>
             </p>
           ) : (
@@ -123,6 +123,7 @@ const HostContent = () => {
       <div>
         <br></br>
         <h1 className="graph-single">{props.title}</h1>
+        <p>{props.id}</p>
         {userExact && <DeleteModal />}
 
         {(() => {
@@ -140,12 +141,12 @@ const HostContent = () => {
         })()}
         <DataSheet props={props} />
         <div>
-          {props.source[0] ? (
+          {props.source ? (
             <p>
               source URL
               <br />
-              <a href={`${props.source[0]}`} target="blank">
-                <span className="href">{props.source[0]}</span>
+              <a href={`${props.source}`} target="blank">
+                <span className="href">{props.source}</span>
               </a>
               {userExact && (
                 <span className="right">

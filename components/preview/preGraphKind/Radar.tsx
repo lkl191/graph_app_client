@@ -1,7 +1,7 @@
 import React from "react";
 import { Radar } from "react-chartjs-2";
 
-const PreviewRadar = ({ props, inputData }) => {
+const PreviewRadar = ({ graphInfo, inputData }) => {
 
   //割合で点数をつける
   const data = {
@@ -9,7 +9,7 @@ const PreviewRadar = ({ props, inputData }) => {
     datasets: [
       {
         data: inputData.value,
-        label: props.title,
+        label: graphInfo.title,
         fill: true,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgb(255, 99, 132)",

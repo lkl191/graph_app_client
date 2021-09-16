@@ -1,11 +1,11 @@
 import React from "react";
 import { Scatter } from "react-chartjs-2";
 
-const PreviewScatter = ({ props, inputData }) => {
+const PreviewScatter = ({ graphInfo, inputData }) => {
   const data = {
     datasets: [
       {
-        label: props.title,
+        label: graphInfo.title,
         data: [
           {
             x: -10,

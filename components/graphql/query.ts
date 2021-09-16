@@ -7,7 +7,6 @@ export const ALL_GRAPHS = gql`
       title
       category
       graphKind
-      source
       user {
         username
         email

@@ -5,22 +5,29 @@ import PreviewPie from "./preGraphKind/Pie";
 import PreviewRadar from "./preGraphKind/Radar";
 import PreviewScatter from "./preGraphKind/Scatter";
 
-const PreviewGraph = ({ props, inputData }) => {
-  const kind = props.graphKind;
+const PreviewGraph = ({ graphInfo, inputData }) => {
+  const kind = graphInfo.graphKind;
 
   return (
     <div>
       {(() => {
-        if (kind == "BAR") {
-          return <PreviewBar props={props} inputData={inputData} />;
-        } else if (kind == "LINE") {
-          return <PreviewLine props={props} inputData={inputData} />;
-        } else if (kind == "PIE") {
-          return <PreviewPie props={props} inputData={inputData} />;
-        } else if (kind == "RADAR") {
-          return <PreviewRadar props={props} inputData={inputData} />;
-        } else if (kind == "SCATTER") {
-          return <PreviewScatter props={props} inputData={inputData} />;
+        switch (kind) {
+          case "BAR":
+            return <PreviewBar graphInfo={graphInfo} inputData={inputData} />;
+
+          case "LINE":
+            return <PreviewLine graphInfo={graphInfo} inputData={inputData} />;
+
+          case "PIE":
+            return <PreviewPie graphInfo={graphInfo} inputData={inputData} />;
+
+          case "RADAR":
+            return <PreviewRadar graphInfo={graphInfo} inputData={inputData} />;
+
+          case "SCATTER":
+            return (
+              <PreviewScatter graphInfo={graphInfo} inputData={inputData} />
+            );
         }
       })()}
     </div>

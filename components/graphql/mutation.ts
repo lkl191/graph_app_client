@@ -6,9 +6,9 @@ export const CREATE_GRAPH = gql`
     $title: String!
     $graphKind: GraphKind!
     $category: String!
-    $source: [String]
+    $source: String
     $label: [String]
-    $value: [Int]
+    $value: [Float]
   ) {
     createGraph(
       inputGraph: {

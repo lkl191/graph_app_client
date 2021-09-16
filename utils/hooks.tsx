@@ -1,13 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { GraphType, IdType, UserType } from "../types/types";
 
-export const useForm = (callback, initialState = {}) => {
+export const useForm = (callback, initialState: GraphType | UserType | IdType) => {
   const [input, setValues] = useState(initialState);
 
-  const onChange = (event) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...input, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     callback();
   };

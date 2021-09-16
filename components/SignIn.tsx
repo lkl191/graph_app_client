@@ -90,16 +90,10 @@ const LoginModal = ({ show, setShow }) => {
   }
 };
 
-type inputType = {
-  input; //{email:String, password:String},
-  onChange: (event) => void;
-  onSubmit: (event) => void;
-};
-
 const SignInModal = ({ show, setShow }) => {
   let email;
   let password;
-  const { input, onChange, onSubmit }: inputType = useForm(callback, {
+  const { input, onChange, onSubmit }: any = useForm(callback, {
     email: "",
     password: "",
   });

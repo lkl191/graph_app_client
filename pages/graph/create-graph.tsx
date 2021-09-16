@@ -1,5 +1,5 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import ReactDataSheet from "react-datasheet";
 
 import { CREATE_GRAPH } from "../../components/graphql/mutation";
@@ -8,15 +8,19 @@ import PreviewGraph from "../../components/preview/preview-graph";
 import "react-datasheet/lib/react-datasheet.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "../../context/auth";
+import { SINGLE_GRAPH } from "../../components/graphql/query";
+import PreviewBlend from "../../components/preview/previewBlend";
+import Test from "../../components/test";
+import { Bar } from "react-chartjs-2";
 
-const CreateGraph = () => {
+const NewCreateGraph = () => {
   const [user] = useAuthState(Auth);
   //1.Stateを作る
   const { input, onChange, onSubmit }: any = useForm(createGraphCallback, {
     title: "",
     category: "",
     graphKind: "LINE",
-    source: [""],
+    source: "",
     label: [""],
     value: [0],
   });
@@ -43,13 +47,11 @@ const CreateGraph = () => {
     for (let i = 0; i < props.length; i++) {
       input.value[i] = Number(props[i]);
     }
-    input.source = [input.source]
     console.log(input);
     createGraph();
   }
 
   //datasheet
-  //1
 
   const grid = [[], []];
   const generateGrid = () => {
@@ -72,80 +74,223 @@ const CreateGraph = () => {
   });
   const [dataSh, setDataSh] = useState(grid);
 
-  if (process.browser) {
-    return (
-      <div className="container">
-        {!user && <p className="attention">ログインしてください。</p>}
-        <h2>create a graph</h2>
+  return (
+    <div className="container">
+      {!user && <p className="attention">ログインしてください。</p>}
+      <h2>新規グラフ作成</h2>
+      <input
+        placeholder="title"
+        className="input_text"
+        name="title"
+        value={input.title}
+        onChange={onChange}
+      />
+      <input
+        placeholder="category"
+        className="input_text"
+        name="category"
+        value={input.category}
+        onChange={onChange}
+      />
+      <select
+        name="graphKind"
+        value={input.graphKind}
+        onChange={onChange}
+        className="graphKind"
+      >
+        <option value="LINE">折れ線</option>
+        <option value="BAR">棒</option>
+        <option value="PIE">円</option>
+        <option value="RADAR">レーダー</option>
+      </select>
+
+      <button
+        type="submit"
+        className={["button create_btn", !user && "click_invalid"].join(" ")}
+        onClick={(e) => {
+          if (user) {
+            onSubmit(e);
+          } else {
+            return <p>ログインしてください。</p>;
+          }
+        }}
+      >
+        create
+      </button>
+
+      <PreviewGraph graphInfo={input} inputData={inputData} />
+
+      <div>
         <input
-          placeholder="title"
+          placeholder="source URL"
           className="input_text"
-          name="title"
-          value={input.title}
+          name="source"
+          value={input.source}
           onChange={onChange}
-        />
-        <input
-          placeholder="category"
-          className="input_text"
-          name="category"
-          value={input.category}
-          onChange={onChange}
-        />
-        <select
-          name="graphKind"
-          value={input.graphKind}
-          onChange={onChange}
-          className="graphKind"
-        >
-          <option value="LINE">折れ線</option>
-          <option value="BAR">棒</option>
-          <option value="PIE">円</option>
-          <option value="RADAR">レーダー</option>
-        </select>
-
-        <button
-          type="submit"
-          className={["button create_btn", !user && "click_invalid"].join(" ")}
-          onClick={(e) => {
-            if (user) {
-              onSubmit(e);
-            } else {
-              console.log("baka");
-              return <p>ログインしてください。</p>;
-            }
-          }}
-        >
-          create
-        </button>
-
-        <PreviewGraph props={input} inputData={inputData} />
-
-        <div>
-          <input
-            placeholder="source URL"
-            className="input_text"
-            name="source"
-            value={input.source}
-            onChange={onChange}
-          />
-        </div>
-
-        <ReactDataSheet
-          data={dataSh}
-          valueRenderer={(cell) => cell.value}
-          className="sheet-container"
-          onCellsChanged={(changes) => {
-            //console.log(changes)//入力したrow,col,valueのみ
-            const newGrid = dataSh.map((row) => [...row]);
-
-            changes.forEach(({ cell, row, col, value }) => {
-              newGrid[row][col] = { ...newGrid[row][col], value };
-            });
-            dataChange(newGrid);
-            setDataSh(newGrid);
-          }}
         />
       </div>
+
+      <ReactDataSheet
+        data={dataSh}
+        valueRenderer={(cell) => cell.value}
+        className="sheet-container"
+        onCellsChanged={(changes) => {
+          //console.log(changes)//入力したrow,col,valueのみ
+          const newGrid = dataSh.map((row) => [...row]);
+
+          changes.forEach(({ cell, row, col, value }) => {
+            newGrid[row][col] = { ...newGrid[row][col], value };
+          });
+          dataChange(newGrid);
+          setDataSh(newGrid);
+        }}
+      />
+    </div>
+  );
+};
+
+const BlendCreateGraph = () => {
+  let graphInfo;
+  const { input, onChange, onSubmit }: any = useForm(createBlendCallback, {
+    id: "",
+  });
+
+  const [createBlend, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
+    variables: { id: input.id },
+  });
+
+  let [dataArray, setDataArray] = useState([]);
+
+  let [graphData, setGraphData] = useState([
+    {
+      labels: [],
+      values: [],
+    },
+  ]);
+
+  const color = `192, 192, 192`;
+
+  const pushGraphData = () => {
+    let labels = [];
+    let values = [];
+    for (let i = 0; i < data.singleGraph.data.length; i++) {
+      labels[i] = data.singleGraph.data[i].label;
+      values[i] = data.singleGraph.data[i].value;
+    }
+    return {
+      labels,
+      values,
+    };
+  };
+
+  useEffect(() => {
+    if (data) {
+      graphInfo = data.singleGraph;
+      setDataArray([...dataArray, graphInfo]);
+      setGraphData([...graphData, pushGraphData()]);
+    }
+  }, [data]);
+
+  console.log(dataArray);
+  console.log(graphData);
+
+  function createBlendCallback() {
+    createBlend();
+  }
+
+  if (error) console.log(error.message);
+
+  const genLabels = () => {
+    let labels = [];
+    for (let i = 1; i < graphData.length; i++) {
+      labels = graphData[i].labels;
+    }
+
+    return labels;
+  };
+
+  const genDatasets = () => {
+    type DatasetsType = {
+      type: string;
+      data: any[];
+      label: string;
+      backgroundColor: string;
+    };
+    let datasets = [];
+
+    for (let i = 0; i < dataArray.length; i++) {
+      const newData: DatasetsType = {
+        label: dataArray[i].title,
+        type: dataArray[i].graphKind.toLowerCase(),
+        backgroundColor: `rgba(${color},0.4)`,
+        data: graphData[i + 1].values,
+      };
+
+      datasets.push(newData); //新しいグラフのデータ
+    }
+
+    console.log(datasets);
+
+    return datasets;
+  };
+  genDatasets();
+
+  const datasets = {
+    labels: genLabels(),
+    datasets: genDatasets(),
+  };
+
+  return (
+    <div className="container">
+      <form onSubmit={onSubmit}>
+        <div id="blend_graph">
+          <p>{input.id}</p>
+          <button className="button" onSubmit={onSubmit}>
+            グラフ検索
+          </button>
+          <button className="button">作成</button>
+          <br />
+          <input name="id" placeholder="graphId" onChange={onChange} />
+          {data && <Bar data={datasets} type="Bar" />}
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const CreateGraph = () => {
+  type CreateGraphType = "NEW" | "BLEND";
+  const [change, setChange] = useState<CreateGraphType>("NEW");
+  if (process.browser) {
+    return (
+      <>
+        <div>
+          <button
+          className="button"
+            onClick={() => {
+              setChange("NEW");
+            }}
+          >
+            新規グラフ作成
+          </button>
+          <button
+          className="button"
+            onClick={() => {
+              setChange("BLEND");
+            }}
+          >
+            グラフを重ねる
+          </button>
+        </div>
+        {(() => {
+          switch (change) {
+            case "NEW":
+              return  <NewCreateGraph />
+            case "BLEND":
+              return <BlendCreateGraph />
+          }
+        })()}
+      </>
     );
   } else {
     return null;

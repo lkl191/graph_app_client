@@ -1,7 +1,7 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 
-const PreviewPie = ({ props, inputData }) => {
+const PreviewPie = ({ graphInfo, inputData }) => {
   //console.log(inputData.label.length)
   let color = [];
   let r = 255;
@@ -33,7 +33,7 @@ const PreviewPie = ({ props, inputData }) => {
     labels: inputData.label,
     datasets: [
       {
-        label: props.title,
+        label: graphInfo.title,
         data: inputData.value,
         backgroundColor: color,
         //[
