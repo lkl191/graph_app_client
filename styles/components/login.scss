@@ -65,11 +65,6 @@
 }
 .logined {
   padding: 10px;
-  @include mq() {
-    //margin: 0;
-    //width: auto;
-    //font-size: 50%;
-  }
 }
 .login_content {
   max-width: 221px;

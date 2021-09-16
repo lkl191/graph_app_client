@@ -16,7 +16,7 @@ const AllBlendGraph = () => {
   return (
     <div className="all_graph">
       <h1 className="other-title">
-        BlendGraph一覧
+        複合グラフ一覧
         <p>グラフ数 {props.length}</p>
         <div>
           {props.map((e) => (
