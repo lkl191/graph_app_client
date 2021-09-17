@@ -154,7 +154,7 @@ const NewCreateGraph = ({ user }) => {
 const BlendCreateGraph = ({ user }) => {
   let graphInfo;
   const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
-    id: "",
+    id: ""
   });
 
   const [blendGraphSet, { data }] = useLazyQuery(SINGLE_GRAPH, {
@@ -168,6 +168,11 @@ const BlendCreateGraph = ({ user }) => {
     variables: {
       graphId: idArray,
       title,
+    },
+    //Mutationの実行後
+    onCompleted() {
+      location.href = "/";
+      console.log("graph is created");
     },
   });
 

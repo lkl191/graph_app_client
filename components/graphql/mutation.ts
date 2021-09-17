@@ -1,22 +1,14 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_BLEND_GRAPH = gql`
-  mutation createBlendGraph(
-    $title: String
-    $graphId: [String]
-  ) {
-    createBlendGraph(
-      inputBlendGraph: {
-        title: $title
-        graphId: $graphId
-      }
-    ) {
+  mutation createBlendGraph($title: String, $graphId: [String]) {
+    createBlendGraph(inputBlendGraph: { title: $title, graphId: $graphId }) {
       id
       title
       graphId
     }
   }
-`
+`;
 
 //enum型はそのままでok
 export const CREATE_GRAPH = gql`
@@ -80,5 +72,11 @@ export const SIGNIN = gql`
 export const DELETE_GRAPH = gql`
   mutation deleteGraph($id: ID!) {
     deleteGraph(inputDeleteGraph: { id: $id })
+  }
+`;
+
+export const DELETE_BLEND_GRAPH = gql`
+  mutation deleteBlendGraph($id: ID!) {
+    deleteBlendGraph(inputDeleteBlendGraph: { id: $id })
   }
 `;

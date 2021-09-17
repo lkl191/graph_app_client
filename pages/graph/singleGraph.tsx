@@ -9,7 +9,7 @@ import PieGraph from "../../components/graphKind/Pie";
 import RadarGraph from "../../components/graphKind/Radar";
 import ScatterGraph from "../../components/graphKind/Scatter";
 import DataSheet from "../../components/data-sheet";
-import DeleteGraphProps from "../../components/deleteGraph";
+import { DeleteGraphProps } from "../../components/deleteGraph";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "../../context/auth";
 
@@ -92,9 +92,6 @@ const Content = () => {
 };
 
 const HostContent = () => {
-  let userExact = false;
-  const [user] = useAuthState(Auth);
-
   const router = useRouter();
   const id = router.query.id;
   let props, kind;
@@ -112,17 +109,12 @@ const HostContent = () => {
   if (data) {
     props = data.singleGraph;
     kind = props.graphKind;
-    if (user && props.user) {
-      if (user.uid == props.user._id) {
-        userExact = true;
-      }
-    }
     return (
       <div>
         <br></br>
         <h1 className="graph-single">{props.title}</h1>
         <p>{props.id}</p>
-        {userExact && <DeleteModal />}
+        <DeleteModal />
 
         {(() => {
           if (kind == "BAR") {
@@ -146,11 +138,9 @@ const HostContent = () => {
               <a href={`${props.source}`} target="blank">
                 <span className="href">{props.source}</span>
               </a>
-              {userExact && (
-                <span className="right">
-                  <button className="button change_btn">変更</button>
-                </span>
-              )}
+              <span className="right">
+                <button className="button change_btn">変更</button>
+              </span>
             </p>
           ) : (
             <p>source URL not found</p>

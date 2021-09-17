@@ -17,11 +17,9 @@ const LoginModal = ({ show, setShow }) => {
     await Auth.signInWithPopup(provider);
     //Mutation Login
     await Auth.onAuthStateChanged((user) => {
-      console.log(user.email);
       if (user) {
         user.getIdToken(true).then(async (token) => {
           const idToken = token;
-          console.log(idToken);
           await addUser();
         });
       }

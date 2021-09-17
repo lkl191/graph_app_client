@@ -55,6 +55,7 @@ export const SINGLE_BLEND_GRAPH = gql`
     singleBlendGraph(id: $id) {
       id
       title
+      userId
       graphs {
         title
         graphKind
@@ -71,9 +72,15 @@ export const SINGLE_BLEND_GRAPH = gql`
     }
   }
 `;
-/*
-    
-*/
+
+export const MY_BLEND_GRAPH = gql`
+  query myBlendGraphs($userId: String) {
+    myBlendGraphs(userId: $userId) {
+      id
+      title
+    }
+  }
+`
 
 export const MY_GRAPHS = gql`
   query myGraphs($userId: String) {

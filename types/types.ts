@@ -23,5 +23,7 @@ export type DatasetsType = {
     backgroundColor: string;
   };
 
+  export type IsGraphType = "NORMAL" | "BLEND"
+
 
 type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR"
