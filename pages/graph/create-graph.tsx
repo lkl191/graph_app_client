@@ -301,8 +301,9 @@ const CreateGraph = () => {
   };
   if (process.browser) {
     return (
-      <>
-        <div>
+      <div className="container">
+        <>
+        <br />
           <button
             className="button"
             name="NEW"
@@ -317,7 +318,7 @@ const CreateGraph = () => {
           >
             グラフを重ねる
           </button>
-        </div>
+        </>
 
         {!user && <p className="attention">ログインしてください。</p>}
         {(() => {
@@ -328,7 +329,7 @@ const CreateGraph = () => {
               return <BlendCreateGraph user={user} />;
           }
         })()}
-      </>
+      </div>
     );
   } else {
     return null;
