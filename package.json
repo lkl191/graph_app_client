@@ -11,7 +11,6 @@
     "start-services-user": "npx ts-node-dev backend/user/index.ts",
     "start-services-graph": "npx ts-node-dev backend/user/index.ts",
     "start-services": "concurrently \"yarn:start-services-*\"",
-    "push": "git add . && git commit -m '${npm_config_commit}' && git push origin master"
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",
