@@ -117,8 +117,10 @@ const NewCreateGraph = ({ user }) => {
           }
         }}
       >
-        create
+        作成
       </button>
+
+      {!user && <p className="attention">ログインしてください。</p>}
 
       <PreviewGraph graphInfo={input} inputData={inputData} />
 
@@ -154,7 +156,7 @@ const NewCreateGraph = ({ user }) => {
 const BlendCreateGraph = ({ user }) => {
   let graphInfo;
   const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
-    id: ""
+    id: "",
   });
 
   const [blendGraphSet, { data }] = useLazyQuery(SINGLE_GRAPH, {
@@ -257,6 +259,7 @@ const BlendCreateGraph = ({ user }) => {
   return (
     <div className="container">
       <form onSubmit={onSubmit}>
+        <p className="attention">棒グラフと折れ線グラフのみ</p>
         <div id="blend_graph">
           <button
             className={["button create_btn", !user && "click_invalid"].join(
@@ -279,11 +282,19 @@ const BlendCreateGraph = ({ user }) => {
             }}
           />
           <br />
-          <input name="id" placeholder="graphId" className="input_text" onChange={onChange} />
+          <input
+            name="id"
+            placeholder="graphId"
+            className="input_text"
+            onChange={onChange}
+          />
 
           <button className="button" onSubmit={onSubmit}>
             グラフ検索
           </button>
+
+
+          {!user && <p className="attention">ログインしてください。</p>}
 
           {data && <Bar data={datasets} type="Bar" />}
         </div>
@@ -303,24 +314,14 @@ const CreateGraph = () => {
     return (
       <div className="container">
         <>
-        <br />
-          <button
-            className="button"
-            name="NEW"
-            onClick={changeCreateGraph}
-          >
+          <button className="button" name="NEW" onClick={changeCreateGraph}>
             新規グラフ作成
           </button>
-          <button
-            name="BLEND"
-            className="button"
-            onClick={changeCreateGraph}
-          >
+          <button name="BLEND" className="button" onClick={changeCreateGraph}>
             グラフを重ねる
           </button>
         </>
 
-        {!user && <p className="attention">ログインしてください。</p>}
         {(() => {
           switch (change) {
             case "NEW":
