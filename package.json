@@ -10,7 +10,7 @@
     "start": "next start",
     "start-services-user": "npx ts-node-dev backend/user/index.ts",
     "start-services-graph": "npx ts-node-dev backend/user/index.ts",
-    "start-services": "concurrently \"yarn:start-services-*\"",
+    "start-services": "concurrently \"yarn:start-services-*\""
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",

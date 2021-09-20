@@ -43,7 +43,7 @@
   }
   @include mq() {
     border: 2px red solid;
-    padding: 5px 10px;
+    padding: 7px 15px;
     font-size: 5px;
   }
 }
@@ -82,7 +82,7 @@
   }
   @include mq() {
     border: 2px $green solid;
-    padding: 5px 10px;
+    padding: 7px 15px;
     font-size: 5px;
   }
 }
