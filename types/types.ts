@@ -5,6 +5,7 @@ export type GraphType = {
     source: string
     label: [string]
     value: [number]
+    color: string
 }
 
 export type UserType = {
@@ -21,6 +22,9 @@ export type DatasetsType = {
     data: any[];
     label: string;
     backgroundColor: string;
+    borderColor: string;
+    pointBorderColor: string;
+    pointHoverBackgroundColor: string
   };
 
   export type IsGraphType = "NORMAL" | "BLEND"

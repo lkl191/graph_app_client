@@ -78,11 +78,15 @@ const SingleBlendGraph = () => {
 
     const genDatasets = () => {
       let datasets = [];
-      const color = `192, 192, 192`;
 
       const graph = props.graphs;
+      console.log(graph);
 
       for (let i = 0; i < graph.length; i++) {
+        let color = graph[i].color;
+        if (!color) {
+          color = "75,192,192";
+        }
         let values = [];
         for (let ii = 0; ii < graph[i].data.length; ii++) {
           values[ii] = graph[i].data[ii].value;
@@ -91,6 +95,9 @@ const SingleBlendGraph = () => {
           label: graph[i].title,
           type: graph[i].graphKind.toLowerCase(),
           backgroundColor: `rgba(${color},0.4)`,
+          borderColor: `rgba(${color},1)`,
+          pointBorderColor: `rgba(${color},1)`,
+          pointHoverBackgroundColor: `rgba(${color},1)`,
           data: values,
         };
         datasets.push(newData);

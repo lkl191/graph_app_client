@@ -19,14 +19,18 @@ import { DatasetsType } from "../../types/types";
 
 const NewCreateGraph = ({ user }) => {
   //1.Stateを作る
-  const { input, onChange, onSubmit }: any = useForm(createGraphCallback, {
-    title: "",
-    category: "",
-    graphKind: "LINE",
-    source: "",
-    label: [""],
-    value: [0],
-  });
+  const { input, onChange, onSubmit, onDefaultChange }: any = useForm(
+    createGraphCallback,
+    {
+      title: "",
+      category: "",
+      graphKind: "LINE",
+      source: "",
+      label: [""],
+      value: [0],
+      color: "100,100,100",
+    }
+  );
 
   //3.MutationをBEに送る
   const [createGraph, { error }] = useMutation(CREATE_GRAPH, {
@@ -68,6 +72,7 @@ const NewCreateGraph = ({ user }) => {
     }
   };
   generateGrid();
+  console.log(input);
 
   //1
   // データの初期値
@@ -76,6 +81,19 @@ const NewCreateGraph = ({ user }) => {
     value: [0, 1, 2],
   });
   const [dataSh, setDataSh] = useState(grid);
+
+  const [color, setColor] = useState({
+    red: "100",
+    green: "100",
+    blue: "100",
+  });
+  const changeColor = (e) => {
+    setColor({ ...color, [e.target.name]: e.target.value });
+  };
+  useEffect(() => {
+    const propsColor = `${color.red},${color.green},${color.blue}`;
+    onDefaultChange("color", propsColor);
+  }, [color]);
 
   return (
     <div className="container">
@@ -105,6 +123,68 @@ const NewCreateGraph = ({ user }) => {
         <option value="PIE">円</option>
         <option value="RADAR">レーダー</option>
       </select>
+      {(() => {
+        if (input.graphKind == "LINE" || input.graphKind == "BAR") {
+          return (
+          <>
+            <br />
+            <input
+              type="range"
+              placeholder="red"
+              className=""
+              min="0"
+              max="255"
+              name="red"
+              value={color.red}
+              onChange={changeColor}
+            />
+            <input
+              placeholder="red"
+              className="input_text"
+              name="red"
+              value={color.red}
+              onChange={changeColor}
+            />
+            <br />
+            <input
+              type="range"
+              placeholder="green"
+              className=""
+              min="0"
+              max="255"
+              name="green"
+              value={color.green}
+              onChange={changeColor}
+            />
+            <input
+              placeholder="green"
+              className="input_text"
+              name="green"
+              value={color.green}
+              onChange={changeColor}
+            />
+            <br />
+            <input
+              type="range"
+              placeholder="blue"
+              className=""
+              min="0"
+              max="255"
+              name="blue"
+              value={color.blue}
+              onChange={changeColor}
+            />
+            <input
+              placeholder="blue"
+              className="input_text"
+              name="blue"
+              value={color.blue}
+              onChange={changeColor}
+            />
+          </>
+          )
+        }
+      })()}
 
       <button
         type="submit"
@@ -158,6 +238,8 @@ const BlendCreateGraph = ({ user }) => {
   const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
     id: "",
   });
+
+  const [colors, setColors] = useState([])
 
   const [blendGraphSet, { data }] = useLazyQuery(SINGLE_GRAPH, {
     variables: { id: input.id },
@@ -217,13 +299,15 @@ const BlendCreateGraph = ({ user }) => {
       graphInfo = data.singleGraph;
       setDataArray([...dataArray, graphInfo]);
       setGraphData([...graphData, pushGraphData()]);
+      setColors([...colors, graphInfo.color])
     }
   }, [data]);
 
-  //console.log(dataArray);
+  console.log(dataArray);
   //console.log(graphData)
 
   if (error) console.log(error.message);
+  console.log(data)
 
   const genLabels = () => {
     let labels = [];
@@ -238,10 +322,17 @@ const BlendCreateGraph = ({ user }) => {
     let datasets = [];
 
     for (let i = 0; i < dataArray.length; i++) {
+      let color = dataArray[i].color
+      if(!color) {
+        color = "75,192,192"
+      }
       const newData: DatasetsType = {
         label: dataArray[i].title,
         type: dataArray[i].graphKind.toLowerCase(),
         backgroundColor: `rgba(${color},0.4)`,
+        borderColor: `rgba(${color},1)`,
+        pointBorderColor: `rgba(${color},1)`,
+        pointHoverBackgroundColor: `rgba(${color},1)`,
         data: graphData[i + 1].values,
       };
 
@@ -292,7 +383,6 @@ const BlendCreateGraph = ({ user }) => {
           <button className="button" onSubmit={onSubmit}>
             グラフ検索
           </button>
-
 
           {!user && <p className="attention">ログインしてください。</p>}
 

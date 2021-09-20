@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
-import { Bar,  } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { dataArray } from "./utils/data";
 
 const BarGraph = ({ props }) => {
   const propsData = props.data;
+  const color = props.color || "75,192,192";
 
-  const chartRef = useRef(null)
+  const chartRef = useRef(null);
   //const base64Image = chartRef.current.chartInstance.toBase64Image();
 
   //label, valueの配列を取得
-  const { labelArray, valueArray } = dataArray(propsData)
+  const { labelArray, valueArray } = dataArray(propsData);
 
   const graphData = {
     // 軸ラベル
@@ -20,6 +21,7 @@ const BarGraph = ({ props }) => {
       {
         data: valueArray,
         label: props.title,
+        backgroundColor: `rgba(${color}, 0.4)`,
       },
     ],
   };

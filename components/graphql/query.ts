@@ -36,6 +36,7 @@ export const SINGLE_GRAPH = gql`
       category
       graphKind
       source
+      color
       user {
         _id
         username
@@ -60,6 +61,7 @@ export const SINGLE_BLEND_GRAPH = gql`
         title
         graphKind
         source
+        color
         user {
           username
           email

@@ -2,8 +2,8 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 
 const PreviewBar = ({ graphInfo, inputData }) => {
-
-  const color = `192, 192, 192`
+  //const color = `192, 192, 192`
+  const color = graphInfo.color;
 
   const graphData = {
     // 軸ラベル
