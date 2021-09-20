@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { Auth } from "../context/auth";
@@ -8,6 +9,7 @@ import SignOut from "../components/SignOut";
 
 const Header = () => {
   const [user] = useAuthState(Auth);
+  console.log(user);
 
   return (
     <div className="header">
@@ -18,24 +20,34 @@ const Header = () => {
       </div>
       {user ? (
         <div className="user">
-          {user.displayName ? (
-            <Link href={`/user?id=${user.uid}`}>
-              <a className="user-items button logined">{user.displayName}</a>
-            </Link>
-          ) : (
-            <Link href={`/user?id=${user.uid}`}>
-              <a className="user-items button logined">Anonymous</a>
-            </Link>
-          )}
           <Link href={`/graph/create-graph`}>
             <a className="user-items button logined">グラフ作成</a>
           </Link>
           <span className="user-items ">
             <SignOut />
           </span>
+          <Link href={`/user?id=${user.uid}`}>
+            <a className="user-items logined user-icon">
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  width="30"
+                  height="30"
+                  className="user-icon-img"
+                />
+              ) : (
+                <Image
+                  src="/user-icon.png"
+                  width="30"
+                  height="30"
+                  className="user-icon-img"
+                />
+              )}
+            </a>
+          </Link>
         </div>
       ) : (
-          <SignIn />
+        <SignIn />
       )}
     </div>
   );

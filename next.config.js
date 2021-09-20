@@ -8,4 +8,7 @@ module.exports = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
   },
+  images: {
+    domains: ['googleusercontent.com']
+  }
 };
