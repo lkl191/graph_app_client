@@ -133,10 +133,8 @@ const HostContent = () => {
         <div>
           {props.source ? (
             <p>
-              source URL
-              <br />
               <a href={`${props.source}`} target="blank">
-                <span className="href">{props.source}</span>
+                <span className="href">source URL</span>
               </a>
               <span className="right">
                 <button className="button change_btn">変更</button>

@@ -44,7 +44,7 @@
   @include mq() {
     border: 2px red solid;
     padding: 7px 15px;
-    font-size: 5px;
+    font-size: 15px;
   }
 }
 .category {
@@ -83,7 +83,7 @@
   @include mq() {
     border: 2px $green solid;
     padding: 7px 15px;
-    font-size: 5px;
+    font-size: 15px;
   }
 }
 
