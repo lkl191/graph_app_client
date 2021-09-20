@@ -2,10 +2,10 @@
   display: flex;
   margin: auto;
   margin-right: 0;
+  vertical-align: middle;
   @include mq() {
-    margin-top: 30px;
     margin-left: 50px;
-    display: inline;
+    display: inline-block;
   }
 }
 
@@ -15,7 +15,6 @@
   border-bottom: 2px $gray solid;
   @include sizes(auto, auto);
   @include mq() {
-    //padding: 0;
     display: inline-block;
     width: 100%;
     padding: 20px 0 20px;
@@ -70,4 +69,5 @@
 
 .user-icon {
   height: 30px;
+  
 }

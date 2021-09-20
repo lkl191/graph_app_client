@@ -56,9 +56,9 @@
 }
 
 .user-items {
-  display: block;
   margin: auto;
   margin-left: 10px;
+  vertical-align: middle;
   @include mq() {
     display: inline-block;
   }
