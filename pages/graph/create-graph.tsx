@@ -126,63 +126,63 @@ const NewCreateGraph = ({ user }) => {
       {(() => {
         if (input.graphKind == "LINE" || input.graphKind == "BAR") {
           return (
-          <>
-            <br />
-            <input
-              type="range"
-              placeholder="red"
-              className=""
-              min="0"
-              max="255"
-              name="red"
-              value={color.red}
-              onChange={changeColor}
-            />
-            <input
-              placeholder="red"
-              className="input_text input_color"
-              name="red"
-              value={color.red}
-              onChange={changeColor}
-            />
-            <br />
-            <input
-              type="range"
-              placeholder="green"
-              className=""
-              min="0"
-              max="255"
-              name="green"
-              value={color.green}
-              onChange={changeColor}
-            />
-            <input
-              placeholder="green"
-              className="input_text input_color"
-              name="green"
-              value={color.green}
-              onChange={changeColor}
-            />
-            <br />
-            <input
-              type="range"
-              placeholder="blue"
-              className=""
-              min="0"
-              max="255"
-              name="blue"
-              value={color.blue}
-              onChange={changeColor}
-            />
-            <input
-              placeholder="blue"
-              className="input_text input_color"
-              name="blue"
-              value={color.blue}
-              onChange={changeColor}
-            />
-          </>
-          )
+            <>
+              <br />
+              <input
+                type="range"
+                placeholder="red"
+                className=""
+                min="0"
+                max="255"
+                name="red"
+                value={color.red}
+                onChange={changeColor}
+              />
+              <input
+                placeholder="red"
+                className="input_text input_color red"
+                name="red"
+                value={color.red}
+                onChange={changeColor}
+              />
+              <br />
+              <input
+                type="range"
+                placeholder="green"
+                className=""
+                min="0"
+                max="255"
+                name="green"
+                value={color.green}
+                onChange={changeColor}
+              />
+              <input
+                placeholder="green"
+                className="input_text input_color green"
+                name="green"
+                value={color.green}
+                onChange={changeColor}
+              />
+              <br />
+              <input
+                type="range"
+                placeholder="blue"
+                className=""
+                min="0"
+                max="255"
+                name="blue"
+                value={color.blue}
+                onChange={changeColor}
+              />
+              <input
+                placeholder="blue"
+                className="input_text input_color blue"
+                name="blue"
+                value={color.blue}
+                onChange={changeColor}
+              />
+            </>
+          );
         }
       })()}
 
@@ -239,7 +239,7 @@ const BlendCreateGraph = ({ user }) => {
     id: "",
   });
 
-  const [colors, setColors] = useState([])
+  const [colors, setColors] = useState([]);
 
   const [blendGraphSet, { data }] = useLazyQuery(SINGLE_GRAPH, {
     variables: { id: input.id },
@@ -299,7 +299,7 @@ const BlendCreateGraph = ({ user }) => {
       graphInfo = data.singleGraph;
       setDataArray([...dataArray, graphInfo]);
       setGraphData([...graphData, pushGraphData()]);
-      setColors([...colors, graphInfo.color])
+      setColors([...colors, graphInfo.color]);
     }
   }, [data]);
 
@@ -307,7 +307,7 @@ const BlendCreateGraph = ({ user }) => {
   //console.log(graphData)
 
   if (error) console.log(error.message);
-  console.log(data)
+  console.log(data);
 
   const genLabels = () => {
     let labels = [];
@@ -322,9 +322,9 @@ const BlendCreateGraph = ({ user }) => {
     let datasets = [];
 
     for (let i = 0; i < dataArray.length; i++) {
-      let color = dataArray[i].color
-      if(!color) {
-        color = "75,192,192"
+      let color = dataArray[i].color;
+      if (!color) {
+        color = "75,192,192";
       }
       const newData: DatasetsType = {
         label: dataArray[i].title,
