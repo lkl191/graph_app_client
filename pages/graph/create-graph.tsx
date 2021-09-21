@@ -140,7 +140,7 @@ const NewCreateGraph = ({ user }) => {
             />
             <input
               placeholder="red"
-              className="input_text"
+              className="input_text input_color"
               name="red"
               value={color.red}
               onChange={changeColor}
@@ -158,7 +158,7 @@ const NewCreateGraph = ({ user }) => {
             />
             <input
               placeholder="green"
-              className="input_text"
+              className="input_text input_color"
               name="green"
               value={color.green}
               onChange={changeColor}
@@ -176,7 +176,7 @@ const NewCreateGraph = ({ user }) => {
             />
             <input
               placeholder="blue"
-              className="input_text"
+              className="input_text input_color"
               name="blue"
               value={color.blue}
               onChange={changeColor}

@@ -16,3 +16,10 @@
   color: red;
   text-align: center;
 }
+
+.input_color {
+  width: 3%;
+  @include mq() {
+    width: 6%;
+  }
+}
