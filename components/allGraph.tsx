@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
 
-import { ALL_GRAPHS, GRAPH_CATEGORY } from "./graphql/query";
+import { ALL_GRAPHS, SEARCH_GRAPHS, GRAPH_CATEGORY } from "./graphql/query";
 
 const GraphList = () => {
   //const [user] = useAuthState(Auth);
@@ -43,7 +43,6 @@ export const graphImage = (graphKind) => {
 };
 
 const AllGraph = ({ props }) => {
-  console.log(props)
   return (
     <div>
       <>
@@ -77,68 +76,20 @@ const AllGraph = ({ props }) => {
 
 const GraphSort = () => {
   //let category;
-  const [category, setCategory] = useState("");
-  const [getGraph, { data }] = useLazyQuery(GRAPH_CATEGORY);
-  let props;
-  if (data) {
-    props = data.graphCate;
-  }
+  const [searchWord, setSearchWord] = useState("");
   return (
     <>
       <input
         type="text"
         className="input_text search_input"
         placeholder="Search Graph"
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={(e) => setSearchWord(e.target.value)}
       />
-      <button
-        type="submit"
-        className="button search"
-        onClick={() => {
-          //variableは発火時
-          getGraph({ variables: { category: category } });
-        }}
-      >
-        検索
-      </button>
-      {props && (
-        <>
-          <p>
-            グラフ数 {props.length}＞＞＞<span>{category}</span>
-            {(() => {
-              if (props.length == 0) {
-                return <p>Graph is not found</p>;
-              }
-            })()}
-          </p>
-          {props.map((e) => (
-            <div key={e.id}>
-              <Link href={`/graph/singleGraph?id=${e.id}`}>
-                <a>
-                  <h3 className="graph-index">
-                    <div className="flex">
-                      <div className="graph_image">
-                        <Image
-                          src={graphImage(e.graphKind)}
-                          width="75"
-                          height="75"
-                        />
-                      </div>
-                      <div>
-                        <span className="graph_title">{e.title}</span>
-                        <br />
-                      </div>
-                    </div>
-                  </h3>
-                </a>
-              </Link>
-              <br></br>
-            </div>
-          ))}
-          <hr />
-          <hr />
-        </>
-      )}
+        <Link href={`/graph/searchGraphs?word=${searchWord}`}>
+          <button className="button">
+          検索
+          </button>
+        </Link>
     </>
   );
 };

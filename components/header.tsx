@@ -9,7 +9,6 @@ import SignOut from "../components/SignOut";
 
 const Header = () => {
   const [user] = useAuthState(Auth);
-  console.log(user);
 
   return (
     <div className="header">

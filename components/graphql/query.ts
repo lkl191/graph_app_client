@@ -104,6 +104,26 @@ export const MY_GRAPHS = gql`
   }
 `;
 
+export const SEARCH_GRAPHS = gql`
+  query searchGraphs($searchWord: String) {
+    searchGraphs(searchWord: $searchWord) {
+      id
+      title
+      category
+      graphKind
+      user {
+        username
+        email
+      }
+      data {
+        id
+        label
+        value
+      }
+    }
+  }
+`
+
 export const GRAPH_CATEGORY = gql`
   query graphCate($category: String) {
     graphCate(category: $category) {
