@@ -6,6 +6,7 @@ export type GraphType = {
     label: [string]
     value: [number]
     color: string
+    description: string
 }
 
 export type UserType = {

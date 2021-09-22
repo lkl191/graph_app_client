@@ -68,8 +68,9 @@
 }
 
 .href {
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline;
+    color: #555;
   }
 }
 
@@ -93,4 +94,13 @@
 
 .dlt_btn {
   @include sizes(100%, auto)
+}
+
+.graph_info {
+  border: $gray 2px solid;
+  border-radius: 5px;
+  padding: 10px;
+  @include mq() {
+    font-size: 80%;
+  }
 }

@@ -20,6 +20,7 @@ export const CREATE_GRAPH = gql`
     $label: [String]
     $value: [Float]
     $color: String
+    $description: String
   ) {
     createGraph(
       inputGraph: {
@@ -30,6 +31,7 @@ export const CREATE_GRAPH = gql`
         label: $label
         value: $value
         color: $color
+        description: $description
       }
     ) {
       id

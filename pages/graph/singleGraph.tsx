@@ -30,129 +30,48 @@ const DeleteModal = () => {
   );
 };
 
-const Content = () => {
-  const router = useRouter();
-  const id = router.query.id;
-  let props, kind;
-  const [getGraph, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
-    variables: { id },
-  });
-  if (error) return <p>error... {error.message}</p>;
-
-  useEffect(() => {
-    if (id) {
-      getGraph();
-    }
-  }, [id]);
-
-  if (data) {
-    props = data.singleGraph;
-    kind = props.graphKind;
-    return (
-      <div>
-        <br></br>
-        <h1 className="graph-single">{props.title}</h1>
-        <p>{props.id}</p>
-        {(() => {
-          if (kind == "BAR") {
-            return <BarGraph props={props} />;
-          } else if (kind == "LINE") {
-            return <LineGraph props={props} />;
-          } else if (kind == "PIE") {
-            return <PieGraph props={props} />;
-          } else if (kind == "RADAR") {
-            return <RadarGraph props={props} />;
-          } else if (kind == "SCATTER") {
-            return <ScatterGraph props={props} />;
-          }
-        })()}
-        <DataSheet props={props} />
-        <div>
-          {props.source ? (
-            <p>
-              source URL
-              <br />
-              <a href={`${props.source}`} target="blank">
-                <span className="href">{props.source}</span>
-              </a>
-            </p>
-          ) : (
-            <p>source URL not found</p>
-          )}
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="loading">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+const Content = ({ props, kind }: any) => {
+  return (
+    <div>
+      {(() => {
+        if (kind == "BAR") {
+          return <BarGraph props={props} />;
+        } else if (kind == "LINE") {
+          return <LineGraph props={props} />;
+        } else if (kind == "PIE") {
+          return <PieGraph props={props} />;
+        } else if (kind == "RADAR") {
+          return <RadarGraph props={props} />;
+        } else if (kind == "SCATTER") {
+          return <ScatterGraph props={props} />;
+        }
+      })()}
+      <DataSheet props={props} />
+    </div>
+  );
 };
 
-const HostContent = () => {
-  const router = useRouter();
-  const id = router.query.id;
-  let props, kind;
-  const [getGraph, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
-    variables: { id },
-  });
-  if (error) return <p>error... {error.message}</p>;
+const HostContent = ({ props, kind }: any) => {
+  return (
+    <div>
+      <DeleteModal />
 
-  useEffect(() => {
-    if (id) {
-      getGraph();
-    }
-  }, [id]);
-
-  if (data) {
-    props = data.singleGraph;
-    kind = props.graphKind;
-    return (
-      <div>
-        <br></br>
-        <h1 className="graph-single">{props.title}</h1>
-        <p>{props.id}</p>
-        <DeleteModal />
-
-        {(() => {
-          if (kind == "BAR") {
-            return <BarGraph props={props} />;
-          } else if (kind == "LINE") {
-            return <LineGraph props={props} />;
-          } else if (kind == "PIE") {
-            return <PieGraph props={props} />;
-          } else if (kind == "RADAR") {
-            return <RadarGraph props={props} />;
-          } else if (kind == "SCATTER") {
-            return <ScatterGraph props={props} />;
-          }
-        })()}
-        <DataSheet props={props} />
-        <div>
-          {props.source ? (
-            <p>
-              <a href={`${props.source}`} target="blank">
-                <span className="href">source URL</span>
-              </a>
-              <span className="right">
-                <button className="button change_btn">変更</button>
-              </span>
-            </p>
-          ) : (
-            <p>source URL not found</p>
-          )}
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="loading">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+      {(() => {
+        if (kind == "BAR") {
+          return <BarGraph props={props} />;
+        } else if (kind == "LINE") {
+          return <LineGraph props={props} />;
+        } else if (kind == "PIE") {
+          return <PieGraph props={props} />;
+        } else if (kind == "RADAR") {
+          return <RadarGraph props={props} />;
+        } else if (kind == "SCATTER") {
+          return <ScatterGraph props={props} />;
+        }
+      })()}
+      <DataSheet props={props} />
+    </div>
+  );
 };
 
 const singleGraph = () => {
@@ -175,20 +94,48 @@ const singleGraph = () => {
 
   if (data) {
     props = data.singleGraph;
+    console.log(props);
     kind = props.graphKind;
     if (user && props.user) {
       if (user.uid == props.user._id) {
         userExact = true;
       }
     }
-  }
-  return (
-    <div>
-      <div className="container">
-        {userExact ? <HostContent /> : <Content />}
+    return (
+      <div>
+        <div className="container">
+          <br></br>
+          <h1 className="graph-single">{props.title}</h1>
+          {userExact ? (
+            <HostContent props={props} kind={kind} />
+          ) : (
+            <Content props={props} kind={kind} />
+          )}
+
+          <div className="graph_info">
+            <p>{props.id}</p>
+            {props.description ? <p>{props.description}</p> : <p></p>}
+            {props.source ? (
+              <p>
+                <a href={`${props.source}`} target="blank">
+                  <span className="href">source URL</span>
+                </a>
+                {/* 
+                <span className="right">
+                  <button className="button change_btn">変更</button>
+                </span>
+                */}
+              </p>
+            ) : (
+              <p>source URL not found</p>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <div className="container">Loading...</div>;
+  }
 };
 
 export default singleGraph;

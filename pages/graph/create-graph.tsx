@@ -29,6 +29,7 @@ const NewCreateGraph = ({ user }) => {
       label: [""],
       value: [0],
       color: "100,100,100",
+      description: "",
     }
   );
 
@@ -99,7 +100,7 @@ const NewCreateGraph = ({ user }) => {
     <div className="container">
       <h2>新規グラフ作成</h2>
       <input
-        placeholder="title"
+        placeholder="※title"
         className="input_text"
         name="title"
         value={input.title}
@@ -205,6 +206,16 @@ const NewCreateGraph = ({ user }) => {
       <PreviewGraph graphInfo={input} inputData={inputData} />
 
       <div>
+        <textarea
+          name="description"
+          value={input.description}
+          onChange={onChange}
+          placeholder="description"
+          className="input_text"
+          cols={50}
+          rows={5}
+        />
+        <br />
         <input
           placeholder="source URL"
           className="input_text"
