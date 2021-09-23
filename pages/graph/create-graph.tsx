@@ -211,7 +211,7 @@ const NewCreateGraph = ({ user }) => {
           value={input.description}
           onChange={onChange}
           placeholder="description"
-          className="input_text"
+          className="input_text description"
           cols={50}
           rows={5}
         />
