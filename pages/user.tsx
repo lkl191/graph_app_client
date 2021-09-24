@@ -1,8 +1,6 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { useRouter, Router } from "next/router";
+import { useLazyQuery } from "@apollo/client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { useAuthState } from "react-firebase-hooks/auth";
