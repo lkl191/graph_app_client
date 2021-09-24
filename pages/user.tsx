@@ -7,8 +7,8 @@ import Image from "next/image";
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "../context/auth";
-import { graphImage } from "../components/allGraph";
 import { IsGraphType } from "../types/types";
+import ShowGraphs from "../components/showGraphs";
 
 const UserGraph = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);
@@ -27,29 +27,7 @@ const UserGraph = () => {
     return (
       <div className="container">
         <h2>My Graph</h2>
-        {props.map((e) => (
-          <div key={e.id}>
-            <Link href={`/graph/singleGraph?id=${e.id}`}>
-              <a>
-                <h3 className="graph-index">
-                  <div className="flex">
-                    <div className="graph_image">
-                      <Image
-                        src={graphImage(e.graphKind)}
-                        width="75"
-                        height="75"
-                      />
-                    </div>
-                    <div>
-                      <span className="graph_title">{e.title}</span>
-                    </div>
-                  </div>
-                </h3>
-              </a>
-            </Link>
-            <br></br>
-          </div>
-        ))}
+        <ShowGraphs props={props} />
         <Link href={`/graph/create-graph`}>
           <a>
             <div className="crt_graph">＋ グラフ作成</div>

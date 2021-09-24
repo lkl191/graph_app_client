@@ -93,6 +93,7 @@ export const MY_GRAPHS = gql`
       title
       category
       graphKind
+      description
       user {
         username
         email
@@ -113,6 +114,7 @@ export const SEARCH_GRAPHS = gql`
       title
       category
       graphKind
+      description
       user {
         username
         email
@@ -133,6 +135,7 @@ export const GRAPH_CATEGORY = gql`
       title
       category
       graphKind
+      description
       user {
         username
         email

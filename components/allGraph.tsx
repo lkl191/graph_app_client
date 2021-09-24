@@ -4,6 +4,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
 
 import { ALL_GRAPHS, SEARCH_GRAPHS, GRAPH_CATEGORY } from "./graphql/query";
+import { graphImage } from "./showGraphs";
 
 const GraphList = () => {
   //const [user] = useAuthState(Auth);
@@ -23,24 +24,7 @@ const GraphList = () => {
   );
 };
 
-export const graphImage = (graphKind) => {
-  let imagePath;
-  switch (graphKind) {
-    case "BAR":
-      imagePath = "/Graphs/bar.png";
-      break;
-    case "LINE":
-      imagePath = "/Graphs/line.png";
-      break;
-    case "PIE":
-      imagePath = "/Graphs/circle.png";
-      break;
-    case "RADAR":
-      imagePath = "/Graphs/radar.png";
-      break;
-  }
-  return imagePath;
-};
+
 
 const AllGraph = ({ props }) => {
   return (
