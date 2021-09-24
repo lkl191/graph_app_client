@@ -61,12 +61,13 @@ const AllGraph = ({ props }) => {
                     </div>
                     <div>
                       <span className="graph_title">{e.title}</span>
+                    {e.description && <p className="description_allGraph">{e.description}</p>}
                     </div>
                   </div>
                 </h3>
               </a>
             </Link>
-            <br></br>
+            <br />
           </div>
         ))}
       </>
@@ -85,11 +86,9 @@ const GraphSort = () => {
         placeholder="Search Graph"
         onChange={(e) => setSearchWord(e.target.value)}
       />
-        <Link href={`/graph/searchGraphs?word=${searchWord}`}>
-          <button className="button">
-          検索
-          </button>
-        </Link>
+      <Link href={`/graph/searchGraphs?word=${searchWord}`}>
+        <button className="button">検索</button>
+      </Link>
     </>
   );
 };

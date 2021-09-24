@@ -17,21 +17,6 @@
   padding: $padding;
 }
 
-//color-bgcolor
-@mixin hover_object(
-  $color,
-  $bgcolor
-) {
-  color: $color;
-  background-color: $bgcolor;
-  &:hover{
-    background-color: gray;
-  }
-  &:active{
-    color: white;
-  }
-}
-
 //sizes
 @mixin sizes(
   $width,

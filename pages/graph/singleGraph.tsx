@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
+import Link from "next/link";
 
 import { SINGLE_GRAPH } from "../../components/graphql/query";
 import BarGraph from "../../components/graphKind/Bar";
@@ -113,6 +114,11 @@ const singleGraph = () => {
           )}
 
           <div className="graph_info">
+            {props.category && (
+              <Link href={`/graph/searchCategory?category=${props.category}`}>
+                <a className="button">{props.category}</a>
+              </Link>
+            )}
             <p>{props.id}</p>
             {props.description ? <p>{props.description}</p> : <p></p>}
             {props.source ? (
