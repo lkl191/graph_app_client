@@ -195,12 +195,14 @@ const SignInModal = ({ show, setShow }) => {
               type="text"
               placeholder="email"
               name="email"
+              className="input_text"
               value={input.email}
               onChange={onChange}
             ></input>
             <input
               type="text"
               placeholder="password"
+              className="input_text"
               name="password"
               value={input.password}
               onChange={onChange}
