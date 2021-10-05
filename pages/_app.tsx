@@ -28,7 +28,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, [router.events]);
   useEffect(() => {
     window.$crisp = [];
-    window.CRISP_WEBSITE_ID = "YOUR_WEBSITE_ID";
+    window.CRISP_WEBSITE_ID = "9c37b529-f47c-42d5-be15-d7db88635701";
     (() => {
       const d = document;
       const s = d.createElement("script");
