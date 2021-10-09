@@ -19,19 +19,14 @@ if (firebase.apps.length === 0) {
 export const Auth = firebase.auth();
 
 export const FirebaseAuth = () => {
-  console.log("func");
-  console.log(Auth.currentUser);
   firebase.auth().onAuthStateChanged((user) => {
-    console.log(user);
     if (user) {
       user
         .getIdToken(true)
         .then((token) => {
-          console.log(token);
           return token;
         })
         .catch(function (error) {
-          console.log(error.message);
           return "example";
         });
     } else {
@@ -43,6 +38,5 @@ export const FirebaseAuth = () => {
 export const AuthContext = createContext({});
 
 export const AuthProvider = (props) => {
-  //console.log(Auth)
   return <AuthContext.Provider value={null} {...props} />;
 };

@@ -24,8 +24,6 @@ const GraphList = () => {
   );
 };
 
-
-
 const AllGraph = ({ props }) => {
   return (
     <div>
@@ -45,7 +43,9 @@ const AllGraph = ({ props }) => {
                     </div>
                     <div>
                       <span className="graph_title">{e.title}</span>
-                    {e.description && <p className="description_allGraph">{e.description}</p>}
+                      {e.description && (
+                        <p className="description_allGraph">{e.description}</p>
+                      )}
                     </div>
                   </div>
                 </h3>

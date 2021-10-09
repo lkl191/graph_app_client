@@ -32,11 +32,9 @@ const LoginModal = ({ show, setShow }) => {
     await Auth.signInWithPopup(provider);
     //Mutation Login
     await Auth.onAuthStateChanged((user) => {
-      console.log(user.email);
       if (user) {
         user.getIdToken(true).then(async (token) => {
           const idToken = token;
-          console.log(idToken);
           await addUser();
         });
       }
@@ -104,11 +102,9 @@ const SignInModal = ({ show, setShow }) => {
     await Auth.signInWithPopup(provider);
     //Mutation Login
     await Auth.onAuthStateChanged((user) => {
-      console.log(user.email);
       if (user) {
         user.getIdToken(true).then(async (token) => {
           const idToken = token;
-          console.log(idToken);
           await addUser();
         });
       }
@@ -121,11 +117,9 @@ const SignInModal = ({ show, setShow }) => {
     await Auth.signInWithPopup(provider);
     //Mutation Login
     await Auth.onAuthStateChanged((user) => {
-      console.log(user.email);
       if (user) {
         user.getIdToken(true).then(async (token) => {
           const idToken = token;
-          console.log(idToken);
           await addUser();
         });
       }
@@ -133,7 +127,6 @@ const SignInModal = ({ show, setShow }) => {
   };
 
   function callback() {
-    //console.log(input.email)
     email = input.email;
     password = input.password;
     Register();
@@ -148,8 +141,6 @@ const SignInModal = ({ show, setShow }) => {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential;
-        console.log(user);
-        console.log(Auth.currentUser);
         signIn();
       })
       .catch((err) => {

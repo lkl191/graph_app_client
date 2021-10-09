@@ -42,7 +42,6 @@ const NewCreateGraph = ({ user }) => {
       console.log("graph is created");
     },
   });
-  //console.log(input)
   //グラフ作成エラー
   if (error) {
     return <p>{error.message}</p>;
@@ -55,7 +54,6 @@ const NewCreateGraph = ({ user }) => {
     for (let i = 0; i < props.length; i++) {
       input.value[i] = Number(props[i]);
     }
-    console.log(input);
     createGraph();
   }
 
@@ -73,7 +71,6 @@ const NewCreateGraph = ({ user }) => {
     }
   };
   generateGrid();
-  console.log(input);
 
   //1
   // データの初期値
@@ -314,11 +311,8 @@ const BlendCreateGraph = ({ user }) => {
     }
   }, [data]);
 
-  console.log(dataArray);
-  //console.log(graphData)
 
   if (error) console.log(error.message);
-  console.log(data);
 
   const genLabels = () => {
     let labels = [];

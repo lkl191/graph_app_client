@@ -3,7 +3,6 @@ import { Pie } from "react-chartjs-2";
 import { dataArray } from './utils/data';
 
 const PieGraph = ({props}) => {
-  console.log(props)
   let color = [];
   let r = 255;
   let g = 255;

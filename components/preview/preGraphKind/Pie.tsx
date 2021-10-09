@@ -2,7 +2,6 @@ import React from "react";
 import { Pie } from "react-chartjs-2";
 
 const PreviewPie = ({ graphInfo, inputData }) => {
-  //console.log(inputData.label.length)
   let color = [];
   let r = 255;
   let g = 255;
@@ -28,7 +27,6 @@ const PreviewPie = ({ graphInfo, inputData }) => {
 
     color.push(`rgb(${r}, ${g}, ${b})`);
   }
-  console.log(color);
   const data = {
     labels: inputData.label,
     datasets: [

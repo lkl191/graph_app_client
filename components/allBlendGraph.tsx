@@ -11,7 +11,6 @@ const AllBlendGraph = () => {
 
   const props = data.allBlendGraphs;
 
-  console.log(props);
 
   return (
     <div className="all_graph">
