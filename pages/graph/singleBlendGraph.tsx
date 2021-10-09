@@ -62,7 +62,6 @@ const SingleBlendGraph = () => {
   let props;
   if (data) {
     props = data.singleBlendGraph;
-    console.log(props);
     if (user && props.userId) {
       if (user.uid == props.userId) {
         userExact = true;
@@ -80,7 +79,6 @@ const SingleBlendGraph = () => {
       let datasets = [];
 
       const graph = props.graphs;
-      console.log(graph);
 
       for (let i = 0; i < graph.length; i++) {
         let color = graph[i].color;

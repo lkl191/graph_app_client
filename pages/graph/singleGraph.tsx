@@ -95,7 +95,6 @@ const singleGraph = () => {
 
   if (data) {
     props = data.singleGraph;
-    console.log(props);
     kind = props.graphKind;
     if (user && props.user) {
       if (user.uid == props.user._id) {

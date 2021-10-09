@@ -18,7 +18,6 @@ const SearchCate = () => {
     }
   }, [category]);
 
-  console.log(data);
   if (data) {
     const props = data.graphCate;
     return (

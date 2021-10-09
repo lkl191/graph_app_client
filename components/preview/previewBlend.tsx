@@ -31,13 +31,6 @@ const PreviewBlend = ({ graphInfo }) => {
   }, [graphInfo]);
 
   useEffect(() => {
-    console.log(dataArray);
-  }, [dataArray]);
-
-  console.log(dataArray);
-  console.log(graphInfo)
-
-  useEffect(() => {
     //console.log(graphData);
   }, [graphData]);
 

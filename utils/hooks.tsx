@@ -32,7 +32,6 @@ export const useDataForm = (initialState = {}) => {
   const [inputData, setValues] = useState(initialState);
 
   const dataChange = (event) => {
-    console.log(event);
     let tmp = {
       label: [],
       value: [],
@@ -47,7 +46,6 @@ export const useDataForm = (initialState = {}) => {
         }
       }
     }
-    console.log(tmp);
     setValues(tmp);
   };
   return {

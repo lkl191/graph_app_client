@@ -11,7 +11,6 @@ const SearchGraphs = () => {
 
   const router = useRouter();
   const word = router.query.word;
-  //console.log(word)
 
   useEffect(() => {
     getGraph({
@@ -23,7 +22,6 @@ const SearchGraphs = () => {
   if (data) {
     props = data.searchGraphs;
   }
-  console.log(props);
 
   return (
     <div className="container">
