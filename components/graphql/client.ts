@@ -16,7 +16,7 @@ const cache = new InMemoryCache({});
 
 const httpLink = new HttpLink({
   //uri: "http://localhost:4000/graphql",
-  uri: "https://genbu.shishin.nara.jp:4443/graphql",
+  uri: "https://genbu.shishin.nara.jp:4000/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -26,13 +26,13 @@ const authLink = setContext(async (_, { headers }) => {
       .getIdToken(true)
       .then((idToken) => {
         console.log("set token");
-        //console.log(idToken);
         token = idToken;
       })
       .catch((err) => {
         console.log(err.message);
       });
   }
+  console.log(token)
   console.log("header send");
   return await {
     headers: await {

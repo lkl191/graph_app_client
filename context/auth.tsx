@@ -10,7 +10,7 @@ export const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSEGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-};
+}
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
