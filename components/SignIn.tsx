@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const LoginModal = ({ show, setShow }) => {
   const [addUser] = useMutation(LOGIN);
-  
+
   //Google
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
