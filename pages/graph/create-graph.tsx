@@ -13,7 +13,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "../../context/auth";
 import { SINGLE_GRAPH } from "../../components/graphql/query";
 import PreviewBlend from "../../components/preview/previewBlend";
-import Test from "../../components/test";
 import { Bar } from "react-chartjs-2";
 import { DatasetsType } from "../../types/types";
 
