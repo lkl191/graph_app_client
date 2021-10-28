@@ -1,3 +1,4 @@
+type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR";
 export type GraphType = {
   title: string;
   category: string;
@@ -29,5 +30,3 @@ export type DatasetsType = {
 };
 
 export type IsGraphType = "NORMAL" | "BLEND";
-
-type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR";
