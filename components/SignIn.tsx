@@ -89,7 +89,7 @@ const LoginModal = ({ show, setShow }) => {
 const SignInModal = ({ show, setShow }) => {
   let email;
   let password;
-  const { input, onChange, onSubmit }: any = useForm(callback, {
+  const { input, onChange, onSubmit } = useForm(callback, {
     email: "",
     password: "",
   });
@@ -134,7 +134,6 @@ const SignInModal = ({ show, setShow }) => {
   const [signIn] = useMutation(SIGNIN, {
     variables: input,
   });
-  //const createUser = new firebase.auth.
   const Register = async () => {
     await firebase
       .auth()

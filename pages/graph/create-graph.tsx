@@ -14,11 +14,11 @@ import { Auth } from "../../context/auth";
 import { SINGLE_GRAPH } from "../../components/graphql/query";
 import PreviewBlend from "../../components/preview/previewBlend";
 import { Bar } from "react-chartjs-2";
-import { DatasetsType } from "../../types/types";
+import { DatasetsType, GraphType } from "../../types/types";
 
 const NewCreateGraph = ({ user }) => {
   //1.Stateを作る
-  const { input, onChange, onSubmit, onDefaultChange }: any = useForm(
+  const { input, onChange, onSubmit, onDefaultChange } = useForm<GraphType>(
     createGraphCallback,
     {
       title: "",
@@ -242,7 +242,7 @@ const NewCreateGraph = ({ user }) => {
 
 const BlendCreateGraph = ({ user }) => {
   let graphInfo;
-  const { input, onChange, onSubmit }: any = useForm(blendGraphSetCallback, {
+  const { input, onChange, onSubmit } = useForm(blendGraphSetCallback, {
     id: "",
   });
 
@@ -286,8 +286,6 @@ const BlendCreateGraph = ({ user }) => {
     },
   ]);
 
-  const color = `192, 192, 192`;
-
   const pushGraphData = () => {
     let labels = [];
     let values = [];
@@ -309,7 +307,6 @@ const BlendCreateGraph = ({ user }) => {
       setColors([...colors, graphInfo.color]);
     }
   }, [data]);
-
 
   if (error) console.log(error.message);
 

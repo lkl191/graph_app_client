@@ -1,24 +1,29 @@
 import React, { useState } from "react";
-import { GraphType, IdType, UserType } from "../types/types";
 
-export const useForm = (
-  callback,
-  initialState: GraphType | UserType | IdType
-) => {
+export const useForm = function <T>(callback, initialState: T) {
   const [input, setValues] = useState(initialState);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...input, [event.target.name]: event.target.value });
+  const onChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setValues({
+      ...input,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement | HTMLButtonElement>
+  ) => {
     event.preventDefault();
     callback();
   };
 
   const onDefaultChange = (name, value) => {
-    setValues({...input, [name]: value})
-  }
+    setValues({ ...input, [name]: value });
+  };
 
   return {
     onChange,
