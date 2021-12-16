@@ -59,7 +59,7 @@ const PreviewBlend = ({ graphInfo }) => {
 
   return (
     <>
-      <Bar data={datasets} type={graphInfo.graphKind} />
+      <Bar data={datasets} />
     </>
   );
 };

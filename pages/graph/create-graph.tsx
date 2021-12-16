@@ -10,11 +10,12 @@ import { useForm, useDataForm } from "../../utils/hooks";
 import PreviewGraph from "../../components/preview/preview-graph";
 import "react-datasheet/lib/react-datasheet.css";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Auth } from "../../context/auth";
+import { app } from "../../context/auth";
 import { SINGLE_GRAPH } from "../../components/graphql/query";
-import PreviewBlend from "../../components/preview/previewBlend";
 import { Bar } from "react-chartjs-2";
 import { DatasetsType, GraphType } from "../../types/types";
+import { getAuth } from "firebase/auth";
+
 
 const NewCreateGraph = ({ user }) => {
   //1.Stateを作る
@@ -41,10 +42,7 @@ const NewCreateGraph = ({ user }) => {
       console.log("graph is created");
     },
   });
-  //グラフ作成エラー
-  if (error) {
-    return <p>{error.message}</p>;
-  }
+  
 
   //2
   function createGraphCallback() {
@@ -73,6 +71,8 @@ const NewCreateGraph = ({ user }) => {
 
   //1
   // データの初期値
+
+
   const { inputData, dataChange }: any = useDataForm({
     label: ["test00", "test01", "test02"],
     value: [0, 1, 2],
@@ -91,6 +91,11 @@ const NewCreateGraph = ({ user }) => {
     const propsColor = `${color.red},${color.green},${color.blue}`;
     onDefaultChange("color", propsColor);
   }, [color]);
+
+  //グラフ作成エラー
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <div className="container">
@@ -387,7 +392,7 @@ const BlendCreateGraph = ({ user }) => {
 
           {!user && <p className="attention">ログインしてください。</p>}
 
-          {data && <Bar data={datasets} type="Bar" />}
+          {data && <Bar data={datasets} />}
         </div>
       </form>
     </div>
@@ -395,7 +400,7 @@ const BlendCreateGraph = ({ user }) => {
 };
 
 const CreateGraph = () => {
-  const [user] = useAuthState(Auth);
+  const [user] = useAuthState(getAuth(app));
   type CreateGraphType = "NEW" | "BLEND";
   const [change, setChange] = useState<CreateGraphType>("NEW");
   const changeCreateGraph = (e) => {

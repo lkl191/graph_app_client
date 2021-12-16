@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Auth } from "../context/auth";
+import { app } from "../context/auth";
 import { IsGraphType } from "../types/types";
 import ShowGraphs from "../components/showGraphs";
+import { getAuth } from "firebase/auth";
+
+const Auth = getAuth(app)
 
 const UserGraph = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);

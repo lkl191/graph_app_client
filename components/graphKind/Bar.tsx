@@ -27,7 +27,7 @@ const BarGraph = ({ props }) => {
   };
   return (
     <div>
-      <Bar type="Bar" data={graphData} ref={chartRef} />
+      <Bar data={graphData} ref={chartRef} />
     </div>
   );
 };

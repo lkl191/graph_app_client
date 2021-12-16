@@ -13,7 +13,7 @@ ul {
     background-color: #ccc;
   }
   @include mq() {
-    padding: $index-padding / 2;
+    padding: 15px;
     margin: 10px auto;
   }
 }

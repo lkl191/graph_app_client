@@ -2,7 +2,7 @@ import React from 'react'
 import { Pie } from "react-chartjs-2";
 import { dataArray } from './utils/data';
 
-const PieGraph = ({props}) => {
+const PieGraph = ({ props }) => {
   let color = [];
   let r = 255;
   let g = 255;
@@ -30,22 +30,22 @@ const PieGraph = ({props}) => {
   }
 
   const propsData = props.data
-  const {labelArray, valueArray} = dataArray(propsData)
-    const data = {
-        labels: labelArray,
-        datasets: [{
-          label: props.title,
-          data: valueArray,
-          backgroundColor: color,
-          hoverOffset: 4,
-          
-        }]
-      };
-    return (
-        <div>
-            <Pie type="Pie" data={data} ></Pie>
-        </div>
-    )
+  const { labelArray, valueArray } = dataArray(propsData)
+  const data = {
+    labels: labelArray,
+    datasets: [{
+      label: props.title,
+      data: valueArray,
+      backgroundColor: color,
+      hoverOffset: 4,
+
+    }]
+  };
+  return (
+    <div>
+      <Pie data={data} ></Pie>
+    </div>
+  )
 }
 
 export default PieGraph

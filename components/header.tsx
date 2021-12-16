@@ -3,9 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { Auth } from "../context/auth";
+import { app } from "../context/auth";
 import SignIn from "../components/SignIn";
 import SignOut from "../components/SignOut";
+import { getAuth } from "firebase/auth";
+
+const Auth = getAuth(app)
 
 const Header = () => {
   const [user] = useAuthState(Auth);

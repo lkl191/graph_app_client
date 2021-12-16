@@ -21,7 +21,7 @@ const PreviewBar = ({ graphInfo, inputData }) => {
 
   return (
     <div>
-      <Bar type="Bar" data={graphData} />
+      <Bar data={graphData} />
     </div>
   );
 };

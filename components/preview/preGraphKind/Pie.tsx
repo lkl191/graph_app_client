@@ -46,7 +46,7 @@ const PreviewPie = ({ graphInfo, inputData }) => {
   };
   return (
     <div>
-      <Pie type="Pie" data={data}></Pie>
+      <Pie data={data}></Pie>
     </div>
   );
 };

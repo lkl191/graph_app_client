@@ -1,12 +1,15 @@
 import { useLazyQuery } from "@apollo/client";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { DeleteBlendGraphProps } from "../../components/deleteGraph";
 import { SINGLE_BLEND_GRAPH } from "../../components/graphql/query";
-import { Auth } from "../../context/auth";
+import { app } from "../../context/auth";
 import { DatasetsType } from "../../types/types";
+
+const Auth = getAuth(app)
 
 const DeleteModal = () => {
   const router = useRouter();
@@ -28,7 +31,7 @@ const DeleteModal = () => {
 const Content = ({ datasets }) => {
   return (
     <>
-      <Bar data={datasets} type="bar" />
+      <Bar data={datasets} />
     </>
   );
 };
@@ -37,7 +40,7 @@ const HostContent = ({ datasets }) => {
   return (
     <>
       <DeleteModal />
-      <Bar data={datasets} type="bar" />
+      <Bar data={datasets} />
     </>
   );
 };
@@ -52,14 +55,14 @@ const SingleBlendGraph = () => {
   const [getBlendGraph, { error, data }] = useLazyQuery(SINGLE_BLEND_GRAPH, {
     variables: { id },
   });
-  if (error) return <p>error... {error.message}</p>;
   useEffect(() => {
     if (id) {
       getBlendGraph();
     }
   }, [id]);
-
+  
   let props;
+  if (error) return <p>error... {error.message}</p>;
   if (data) {
     props = data.singleBlendGraph;
     if (user && props.userId) {

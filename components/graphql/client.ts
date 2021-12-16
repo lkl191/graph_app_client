@@ -10,8 +10,10 @@ import {
 import { onError } from "apollo-link-error";
 import { setContext } from "@apollo/client/link/context";
 
-import { Auth } from "../../context/auth";
+import { app } from "../../context/auth";
+import { getAuth } from "firebase/auth";
 
+const Auth = getAuth(app);
 const cache = new InMemoryCache({});
 
 const httpLink = new HttpLink({
@@ -32,7 +34,7 @@ const authLink = setContext(async (_, { headers }) => {
         console.log(err.message);
       });
   }
-  console.log(token)
+  console.log(token);
   console.log("header send");
   return await {
     headers: await {

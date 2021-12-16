@@ -12,7 +12,10 @@ import ScatterGraph from "../../components/graphKind/Scatter";
 import DataSheet from "../../components/data-sheet";
 import { DeleteGraphProps } from "../../components/deleteGraph";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Auth } from "../../context/auth";
+import { app } from "../../context/auth";
+import { getAuth } from "firebase/auth";
+
+const Auth = getAuth(app)
 
 const DeleteModal = () => {
   const router = useRouter();
@@ -75,9 +78,10 @@ const HostContent = ({ props, kind }: any) => {
   );
 };
 
-const singleGraph = () => {
+const SingleGraph = () => {
   let userExact = false;
   const [user] = useAuthState(Auth);
+  //let user;
 
   const router = useRouter();
   const id = router.query.id;
@@ -85,13 +89,13 @@ const singleGraph = () => {
   const [getGraph, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
     variables: { id },
   });
-  if (error) return <p>error... {error.message}</p>;
 
   useEffect(() => {
     if (id) {
       getGraph();
     }
   }, [id]);
+  if (error) return <p>error... {error.message}</p>;
 
   if (data) {
     props = data.singleGraph;
@@ -143,4 +147,4 @@ const singleGraph = () => {
   }
 };
 
-export default singleGraph;
+export default SingleGraph;

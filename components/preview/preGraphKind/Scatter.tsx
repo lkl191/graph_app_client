@@ -31,7 +31,7 @@ const PreviewScatter = ({ graphInfo, inputData }) => {
 
   return (
     <div>
-      <Scatter type="Scatter" data={data} />
+      <Scatter data={data} />
     </div>
   );
 };

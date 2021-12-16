@@ -1,6 +1,8 @@
 import React, { createContext } from "react";
-import firebase from "firebase/app";
 import "firebase/auth";
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -12,14 +14,13 @@ export const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 }
 
-if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
-}
+export const app = initializeApp(firebaseConfig)
 
-export const Auth = firebase.auth();
+const Auth = getAuth(app)
+
 
 export const FirebaseAuth = () => {
-  firebase.auth().onAuthStateChanged((user) => {
+  Auth.onAuthStateChanged((user) => {
     if (user) {
       user
         .getIdToken(true)

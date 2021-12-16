@@ -8,14 +8,16 @@ const LineGraph = ({ props }) => {
     const color = props.color || "75,192,192"
     const { labelArray, valueArray } = dataArray(propsData);
 
-    const example = {
+    const graphData = {
       labels: labelArray,
       datasets: [
         {
+          data: valueArray,
           label: `${props.title}`,
+          backgroundColor: `rgba(${color},0.4)`,
+          /*
           fill: true,
           lineTension: 0.1,
-          backgroundColor: `rgba(${color},0.4)`,
           borderColor: `rgba(${color},1)`,
           borderCapStyle: "round",
           borderDash: [],
@@ -30,13 +32,13 @@ const LineGraph = ({ props }) => {
           pointHoverBorderWidth: 1,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: valueArray,
+          */
         },
       ],
     };
     return (
       <div>
-        <Line type="Line" data={example} />
+        <Line data={graphData} />
       </div>
     );
   } else {

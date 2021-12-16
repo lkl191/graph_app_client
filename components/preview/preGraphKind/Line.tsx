@@ -12,9 +12,10 @@ const PreviewLine = ({ graphInfo, inputData }) => {
       {
         label: `${graphInfo.title}`,
         data: inputData.value,
+        backgroundColor: `rgba(${color},0.4)`,
+        /*
         fill: true,
         lineTension: 0,
-        backgroundColor: `rgba(${color},0.4)`,
         borderColor: `rgba(${color},1)`,
         borderCapStyle: "round",
         borderDash: [],
@@ -29,12 +30,13 @@ const PreviewLine = ({ graphInfo, inputData }) => {
         pointHoverBorderWidth: 1,
         pointRadius: 1,
         pointHitRadius: 10,
+        */
       },
     ],
   };
   return (
     <div>
-      <Line type="Line" data={example} />
+      <Line data={example} />
     </div>
   );
 };

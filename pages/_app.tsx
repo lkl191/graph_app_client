@@ -1,9 +1,6 @@
 import "../styles/main.scss";
-//import { AuthProvider } from "../context/auth";
 import { useEffect } from "react";
 import { ApolloProvider } from "@apollo/client";
-import { AppProps } from "next/dist/next-server/lib/router/router";
-import dynamic from "next/dynamic";
 
 import client from "../components/graphql/client";
 import Header from "../components/header";
@@ -11,11 +8,7 @@ import Footer from "../components/footer";
 import Meta from "../components/meta";
 import * as gtag from "../lib/gtag";
 import router from "next/router";
-
-const CrispWithNoSSR = dynamic(() => import("../components/crisp"), {
-  ssr: false,
-});
-
+import { AppProps } from "next/app";
 
 interface MyWindow extends Window {
   $crisp: [],

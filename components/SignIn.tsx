@@ -3,43 +3,60 @@ import Image from "next/image";
 import firebase from "firebase/app";
 import { useMutation } from "@apollo/client";
 
-import { Auth } from "../context/auth";
+import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider, signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { app } from "../context/auth";
 import { LOGIN, SIGNIN } from "./graphql/mutation";
 import { useForm } from "../utils/hooks";
 import Link from "next/link";
 
+const Auth = getAuth(app)
+
+//Google
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider;
+
+  signInWithPopup(Auth, provider)
+    .then((user) => {
+      console.log(user)
+      //await addUser()
+    })
+  //Mutation Login
+  /*
+  await Auth.onAuthStateChanged((user) => {
+    if (user) {
+      user.getIdToken(true).then(async (token) => {
+        const idToken = token;
+        await addUser();
+      });
+    }
+  });
+  */
+};
+
+//Github
+const signInWithGithub = async () => {
+  const provider = new GithubAuthProvider;
+  //await Auth.signInWithPopup(provider);
+  signInWithPopup(Auth, provider)
+    .then((user) => {
+      console.log(user)
+      // await addUser()
+    })
+  //Mutation Login
+  /*
+  await Auth.onAuthStateChanged((user) => {
+    if (user) {
+      user.getIdToken(true).then(async (token) => {
+        const idToken = token;
+        await addUser();
+      });
+    }
+  });
+  */
+};
+
 const LoginModal = ({ show, setShow }) => {
   const [addUser] = useMutation(LOGIN);
-
-  //Google
-  const signInWithGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await Auth.signInWithPopup(provider);
-    //Mutation Login
-    await Auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken(true).then(async (token) => {
-          const idToken = token;
-          await addUser();
-        });
-      }
-    });
-  };
-
-  //Github
-  const signInWithGithub = async () => {
-    const provider = new firebase.auth.GithubAuthProvider();
-    await Auth.signInWithPopup(provider);
-    //Mutation Login
-    await Auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken(true).then(async (token) => {
-          const idToken = token;
-          await addUser();
-        });
-      }
-    });
-  };
 
   if (show) {
     //single sign on
@@ -96,35 +113,6 @@ const SignInModal = ({ show, setShow }) => {
 
   const [addUser] = useMutation(LOGIN);
 
-  //Google
-  const signInWithGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await Auth.signInWithPopup(provider);
-    //Mutation Login
-    await Auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken(true).then(async (token) => {
-          const idToken = token;
-          await addUser();
-        });
-      }
-    });
-  };
-
-  //Github
-  const signInWithGithub = async () => {
-    const provider = new firebase.auth.GithubAuthProvider();
-    await Auth.signInWithPopup(provider);
-    //Mutation Login
-    await Auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken(true).then(async (token) => {
-          const idToken = token;
-          await addUser();
-        });
-      }
-    });
-  };
 
   function callback() {
     email = input.email;
@@ -135,16 +123,10 @@ const SignInModal = ({ show, setShow }) => {
     variables: input,
   });
   const Register = async () => {
-    await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential;
-        signIn();
+    signInWithEmailAndPassword(Auth, email, password)
+      .then((user) => {
+        signIn()
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
   };
   if (show) {
     //ユーザ登録

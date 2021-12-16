@@ -22,7 +22,7 @@ const PreviewRadar = ({ graphInfo, inputData }) => {
   };
   return (
     <div>
-      <Radar type="Radar" data={data} />
+      <Radar data={data} />
     </div>
   );
 };
