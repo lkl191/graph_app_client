@@ -8,10 +8,12 @@ import SignIn from "../components/SignIn";
 import SignOut from "../components/SignOut";
 import { getAuth } from "firebase/auth";
 
-const Auth = getAuth(app)
+
 
 const Header = () => {
-  const [user] = useAuthState(Auth);
+  //const Auth = getAuth(app)
+  //const [user] = useAuthState(Auth);
+  let user
 
   return (
     <div className="header">

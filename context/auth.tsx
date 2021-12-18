@@ -1,8 +1,7 @@
 import React, { createContext } from "react";
-import "firebase/auth";
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+
 
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -16,10 +15,9 @@ export const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig)
 
-const Auth = getAuth(app)
-
 
 export const FirebaseAuth = () => {
+  const Auth = getAuth(app)
   Auth.onAuthStateChanged((user) => {
     if (user) {
       user

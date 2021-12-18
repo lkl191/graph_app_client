@@ -13,16 +13,17 @@ import { setContext } from "@apollo/client/link/context";
 import { app } from "../../context/auth";
 import { getAuth } from "firebase/auth";
 
-const Auth = getAuth(app);
 const cache = new InMemoryCache({});
 
 const httpLink = new HttpLink({
   //uri: "http://localhost:4000/graphql",
-  uri: "https://genbu.shishin.nara.jp:4000/graphql",
+  //uri: "https://genbu.shishin.nara.jp:4000/graphql",
+  uri: "https://graph-app-gateway.herokuapp.com/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {
   let token;
+  const Auth = getAuth(app);
   if (Auth.currentUser) {
     await Auth.currentUser
       .getIdToken(true)

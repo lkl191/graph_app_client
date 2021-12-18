@@ -9,12 +9,12 @@ import { LOGIN, SIGNIN } from "./graphql/mutation";
 import { useForm } from "../utils/hooks";
 import Link from "next/link";
 
-const Auth = getAuth(app)
 
 //Google
 const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider;
-
+  const Auth = getAuth(app)// グローバル変数ではエラー
+  
   signInWithPopup(Auth, provider)
     .then((user) => {
       console.log(user)
@@ -37,6 +37,7 @@ const signInWithGoogle = async () => {
 const signInWithGithub = async () => {
   const provider = new GithubAuthProvider;
   //await Auth.signInWithPopup(provider);
+  const Auth = getAuth(app)// グローバル変数ではエラー
   signInWithPopup(Auth, provider)
     .then((user) => {
       console.log(user)
@@ -123,6 +124,7 @@ const SignInModal = ({ show, setShow }) => {
     variables: input,
   });
   const Register = async () => {
+    const Auth = getAuth(app)// グローバル変数ではエラー
     signInWithEmailAndPassword(Auth, email, password)
       .then((user) => {
         signIn()
