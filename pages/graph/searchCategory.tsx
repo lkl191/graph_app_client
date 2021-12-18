@@ -23,7 +23,7 @@ const SearchCate = () => {
     return (
       <div className="container">
         <p>
-          {`&quot`}{category}{`&quot`}の検索結果 {props.length}件
+          {`"`}{category}{`"`}の検索結果 {props.length}件
         </p>
         <ShowGraphs props={props} />
       </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import firebase from "firebase/app";
 import { useMutation } from "@apollo/client";
 
 import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider, signInWithEmailAndPassword, getAuth } from "firebase/auth";

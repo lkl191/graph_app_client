@@ -37,7 +37,7 @@ const SearchGraphs = () => {
       </Link>
       {props && (
         <>
-        <p>{`&quot`}{word}{`&quot`}の検索結果 {props.length}件</p>
+          <p>{`"`}{word}{`"`}の検索結果 {props.length}件</p>
           <ShowGraphs props={props} />
         </>
       )}
