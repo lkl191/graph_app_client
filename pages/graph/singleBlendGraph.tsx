@@ -1,12 +1,11 @@
 import { useLazyQuery } from "@apollo/client";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { DeleteBlendGraphProps } from "../../components/deleteGraph";
 import { SINGLE_BLEND_GRAPH } from "../../components/graphql/query";
-import { app } from "../../context/auth";
+import { app, AuthContext } from "../../context/auth";
 import { DatasetsType } from "../../types/types";
 
 const Auth = getAuth(app)
@@ -47,7 +46,7 @@ const HostContent = ({ datasets }) => {
 
 const SingleBlendGraph = () => {
   let userExact = false;
-  const [user] = useAuthState(Auth);
+  const { user } = useContext(AuthContext)
 
   const router = useRouter();
   const id = router.query.id;
@@ -60,7 +59,7 @@ const SingleBlendGraph = () => {
       getBlendGraph();
     }
   }, [id]);
-  
+
   let props;
   if (error) return <p>error... {error.message}</p>;
   if (data) {

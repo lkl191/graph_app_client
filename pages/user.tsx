@@ -1,10 +1,9 @@
 import { useLazyQuery } from "@apollo/client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from "../context/auth";
+import { app, AuthContext } from "../context/auth";
 import { IsGraphType } from "../types/types";
 import ShowGraphs from "../components/showGraphs";
 import { getAuth } from "firebase/auth";
@@ -13,7 +12,7 @@ const Auth = getAuth(app)
 
 const UserGraph = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);
-  const [user] = useAuthState(Auth);
+  const user = useContext(AuthContext)
 
   //更新で発火
   useEffect(() => {
@@ -47,7 +46,7 @@ const UserGraph = () => {
 
 const UserBlendGraph = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_BLEND_GRAPH);
-  const [user] = useAuthState(Auth);
+  const user = useContext(AuthContext)
 
   //更新で発火
   useEffect(() => {

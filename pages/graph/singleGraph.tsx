@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
 import Link from "next/link";
@@ -11,11 +11,7 @@ import RadarGraph from "../../components/graphKind/Radar";
 import ScatterGraph from "../../components/graphKind/Scatter";
 import DataSheet from "../../components/data-sheet";
 import { DeleteGraphProps } from "../../components/deleteGraph";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from "../../context/auth";
-import { getAuth } from "firebase/auth";
-
-const Auth = getAuth(app)
+import { AuthContext } from "../../context/auth";
 
 const DeleteModal = () => {
   const router = useRouter();
@@ -80,8 +76,7 @@ const HostContent = ({ props, kind }: any) => {
 
 const SingleGraph = () => {
   let userExact = false;
-  const [user] = useAuthState(Auth);
-  //let user;
+  const { user } = useContext(AuthContext)
 
   const router = useRouter();
   const id = router.query.id;

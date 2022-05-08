@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDataSheet from "react-datasheet";
 
 import {
@@ -9,12 +9,10 @@ import {
 import { useForm, useDataForm } from "../../utils/hooks";
 import PreviewGraph from "../../components/preview/preview-graph";
 import "react-datasheet/lib/react-datasheet.css";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from "../../context/auth";
+import { AuthContext } from "../../context/auth";
 import { SINGLE_GRAPH } from "../../components/graphql/query";
 import { Bar } from "react-chartjs-2";
 import { DatasetsType, GraphType } from "../../types/types";
-import { getAuth } from "firebase/auth";
 
 
 const NewCreateGraph = ({ user }) => {
@@ -42,7 +40,7 @@ const NewCreateGraph = ({ user }) => {
       console.log("graph is created");
     },
   });
-  
+
 
   //2
   function createGraphCallback() {
@@ -400,7 +398,7 @@ const BlendCreateGraph = ({ user }) => {
 };
 
 const CreateGraph = () => {
-  const [user] = useAuthState(getAuth(app));
+  const user = useContext(AuthContext)
   type CreateGraphType = "NEW" | "BLEND";
   const [change, setChange] = useState<CreateGraphType>("NEW");
   const changeCreateGraph = (e) => {

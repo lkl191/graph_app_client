@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useAuthState } from "react-firebase-hooks/auth";
 
-import { app } from "../context/auth";
+import { AuthContext } from "../context/auth";
 import SignIn from "../components/SignIn";
 import SignOut from "../components/SignOut";
-import { getAuth } from "firebase/auth";
-
 
 
 const Header = () => {
-  //const Auth = getAuth(app)
-  //const [user] = useAuthState(Auth);
-  let user
+  const { user } = useContext(AuthContext)
 
   return (
     <div className="header">
