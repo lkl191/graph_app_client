@@ -5,48 +5,37 @@ import {
   NormalizedCacheObject,
   from,
 } from "@apollo/client";
-
-//import { getDataFromTree } from "@apollo/client/react/ssr";
-import { onError } from "apollo-link-error";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 
 import { app } from "../../context/auth";
 import { getAuth } from "firebase/auth";
 
 const cache = new InMemoryCache({});
 
+const URI = process.env.BACKEND_GATEWAY_URI
+
 const httpLink = new HttpLink({
-  //uri: "http://localhost:4000/graphql",
-  //uri: "https://genbu.shishin.nara.jp:4000/graphql",
-  // uri: "https://graph-app-gateway.herokuapp.com/graphql",
-  uri: "https://graph-app-micro-gateway.herokuapp.com/graphql"
+  uri: URI
 });
 
 const authLink = setContext(async (_, { headers }) => {
-  let token;
+  let token: string;
   const Auth = getAuth(app);
   if (Auth.currentUser) {
-    await Auth.currentUser
-      .getIdToken(true)
-      .then((idToken) => {
-        console.log("set token");
-        token = idToken;
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    token = await Auth.currentUser.getIdToken(true)
   }
   console.log(token);
   console.log("header send");
-  return await {
-    headers: await {
+  return {
+    headers: {
       ...headers,
-      authorization: (await token) ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
 
-const errorLink: any = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>
       console.log(
@@ -59,8 +48,7 @@ const errorLink: any = onError(({ graphQLErrors, networkError }) => {
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   ssrMode: true,
   cache,
-  link: from([errorLink, authLink.concat(httpLink)]),
-  //link: authLink.concat(httpLink),
+  link: from([authLink, errorLink, httpLink])
 });
 
 export default client;

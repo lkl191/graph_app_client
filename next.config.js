@@ -7,6 +7,7 @@ module.exports = {
     FIREBASE_MESSEGING_SENDER_ID: process.env.FIREBASE_MESSEGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+    BACKEND_GATEWAY_URI: process.env.BACKEND_GATEWAY_URI
   },
   images: {
     domains: ['googleusercontent.com']
