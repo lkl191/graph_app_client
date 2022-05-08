@@ -1,9 +1,8 @@
-import React, { createContext } from "react";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import React, { createContext, useEffect, useState } from "react";
+import { FirebaseOptions, initializeApp } from "firebase/app";
+import { getAuth, User } from "firebase/auth";
 
-
-export const firebaseConfig = {
+export const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: process.env.FIREBASE_PROJECT_ID,
@@ -15,6 +14,7 @@ export const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig)
 
+export const Auth = getAuth(app)
 
 export const FirebaseAuth = () => {
   const Auth = getAuth(app)
@@ -34,8 +34,24 @@ export const FirebaseAuth = () => {
   });
 };
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext<{
+  user?: User
+  setUser?: React.Dispatch<React.SetStateAction<User>>
+}>({});
 
-export const AuthProvider = (props) => {
-  return <AuthContext.Provider value={null} {...props} />;
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState<User>()
+  useEffect(() => {
+    if (!user) {
+      Auth.onAuthStateChanged((u) => {
+        setUser(u)
+      })
+    }
+  }, [user])
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  )
 };

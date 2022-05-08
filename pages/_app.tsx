@@ -9,6 +9,7 @@ import Meta from "../components/meta";
 import * as gtag from "../lib/gtag";
 import router from "next/router";
 import { AppProps } from "next/app";
+import { AuthContext, AuthProvider } from "../context/auth";
 
 interface MyWindow extends Window {
   $crisp: [],
@@ -39,10 +40,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <ApolloProvider client={client}>
-        <Meta />
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
+        <AuthProvider>
+          <Meta />
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </AuthProvider>
       </ApolloProvider>
     </>
   );
