@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Image from "next/image";
 
-import { ALL_GRAPHS, SEARCH_GRAPHS, GRAPH_CATEGORY } from "./graphql/query";
+import { ALL_GRAPHS } from "./graphql/query";
 import { graphImage } from "./showGraphs";
 
 const GraphList = () => {
-  //const [user] = useAuthState(Auth);
   const { error, loading, data } = useQuery(ALL_GRAPHS);
 
   if (loading) return <p>Loading...</p>;
@@ -60,7 +59,6 @@ const AllGraph = ({ props }) => {
 };
 
 const GraphSort = () => {
-  //let category;
   const [searchWord, setSearchWord] = useState("");
   return (
     <>
