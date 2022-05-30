@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDataSheet from "react-datasheet";
 
-import { putValue } from "./graphKind/utils/data";
+import { putValue } from "./utils/data";
 import "react-datasheet/lib/react-datasheet.css";
+import { Graph } from "../types/types";
 
-const DataSheet = ({ props }) => {
-  const propsData = props.data;
+const DataSheet = ({ graph }: {graph: Graph}) => {
+  const propsData = graph.data;
   const { labelArray, valueArray } = putValue(propsData);
 
   const data = [labelArray, valueArray];

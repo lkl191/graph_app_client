@@ -4,14 +4,11 @@ import { useLazyQuery } from "@apollo/client";
 import Link from "next/link";
 
 import { SINGLE_GRAPH } from "../../components/graphql/query";
-import BarGraph from "../../components/graphKind/Bar";
-import LineGraph from "../../components/graphKind/Line";
-import PieGraph from "../../components/graphKind/Pie";
-import RadarGraph from "../../components/graphKind/Radar";
-import ScatterGraph from "../../components/graphKind/Scatter";
+import GraphTemplate from "../../components/graph/GraphTemplate";
 import DataSheet from "../../components/data-sheet";
-import { DeleteGraphProps } from "../../components/deleteGraph";
+import { DeleteGraphProps } from "../../components/graph/deleteGraph";
 import { AuthContext } from "../../context/auth";
+import { Graph, GraphKind } from "../../types/types";
 
 const DeleteModal = () => {
   const router = useRouter();
@@ -30,58 +27,14 @@ const DeleteModal = () => {
   );
 };
 
-const Content = ({ props, kind }: any) => {
-  return (
-    <div>
-      {(() => {
-        if (kind == "BAR") {
-          return <BarGraph props={props} />;
-        } else if (kind == "LINE") {
-          return <LineGraph props={props} />;
-        } else if (kind == "PIE") {
-          return <PieGraph props={props} />;
-        } else if (kind == "RADAR") {
-          return <RadarGraph props={props} />;
-        } else if (kind == "SCATTER") {
-          return <ScatterGraph props={props} />;
-        }
-      })()}
-      <DataSheet props={props} />
-    </div>
-  );
-};
-
-const HostContent = ({ props, kind }: any) => {
-  return (
-    <div>
-      <DeleteModal />
-
-      {(() => {
-        if (kind == "BAR") {
-          return <BarGraph props={props} />;
-        } else if (kind == "LINE") {
-          return <LineGraph props={props} />;
-        } else if (kind == "PIE") {
-          return <PieGraph props={props} />;
-        } else if (kind == "RADAR") {
-          return <RadarGraph props={props} />;
-        } else if (kind == "SCATTER") {
-          return <ScatterGraph props={props} />;
-        }
-      })()}
-      <DataSheet props={props} />
-    </div>
-  );
-};
-
 const SingleGraph = () => {
-  let userExact = false;
+  let isHost = false;
   const { user } = useContext(AuthContext)
 
   const router = useRouter();
   const id = router.query.id;
-  let props, kind;
-  const [getGraph, { error, data }] = useLazyQuery(SINGLE_GRAPH, {
+  let graph: Graph;
+  const [getGraph, { error, data }] = useLazyQuery<{ singleGraph: Graph }>(SINGLE_GRAPH, {
     variables: { id },
   });
 
@@ -93,35 +46,34 @@ const SingleGraph = () => {
   if (error) return <p>error... {error.message}</p>;
 
   if (data) {
-    props = data.singleGraph;
-    kind = props.graphKind;
-    if (user && props.user) {
-      if (user.uid == props.user._id) {
-        userExact = true;
+    graph = data.singleGraph;
+    console.log(graph)
+    if (user && graph.user) {
+      if (user.uid == graph.user._id) {
+        isHost = true;
       }
     }
     return (
       <div>
         <div className="container">
           <br></br>
-          <h1 className="graph-single">{props.title}</h1>
-          {userExact ? (
-            <HostContent props={props} kind={kind} />
-          ) : (
-            <Content props={props} kind={kind} />
-          )}
-
+          <h1 className="graph-single">{graph.title}</h1>
+          <div>
+            {isHost && <DeleteModal />}
+            <GraphTemplate graph={graph} />
+            <DataSheet graph={graph} />
+          </div>
           <div className="graph_info">
-            {props.category && (
-              <Link href={`/graph/searchCategory?category=${props.category}`}>
-                <a className="button">{props.category}</a>
+            {graph.category && (
+              <Link href={`/graph/searchCategory?category=${graph.category}`}>
+                <a className="button">{graph.category}</a>
               </Link>
             )}
-            <p>{props.id}</p>
-            {props.description ? <p>{props.description}</p> : <p></p>}
-            {props.source ? (
+            <p>{graph.id}</p>
+            {graph.description ? <p>{graph.description}</p> : <p></p>}
+            {graph.source ? (
               <p>
-                <a href={`${props.source}`} target="blank">
+                <a href={`${graph.source}`} target="blank">
                   <span className="href">source URL</span>
                 </a>
                 {/* 

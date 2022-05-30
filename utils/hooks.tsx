@@ -21,19 +21,18 @@ export const useForm = function <T>(callback, initialState: T) {
     callback();
   };
 
-  const onDefaultChange = (name, value) => {
-    setValues({ ...input, [name]: value });
-  };
-
   return {
     onChange,
     onSubmit,
-    onDefaultChange,
+    setValues,
     input,
   };
 };
 
-export const useDataForm = (initialState = {}) => {
+export const useDataForm = function (initialState: {
+  label: string[],
+  value: number[]
+}) {
   const [inputData, setValues] = useState(initialState);
 
   const dataChange = (event) => {

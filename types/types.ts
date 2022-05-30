@@ -1,25 +1,46 @@
 type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR";
-export type GraphType = {
+
+interface CreateGraphType {
   title: string;
   category: string;
   graphKind: GraphKind;
   source: string;
-  label: [string];
-  value: [number];
+  label: string[];
+  value: number[];
   color: string;
   description: string;
 };
 
-export type UserType = {
+interface Graph {
+  id: string
+  title: string
+  category: string
+  data: {
+    id: string
+    label: string
+    value: number
+  }[]
+  user: {
+    _id: string
+    email: string
+    username?: string
+  }
+  graphKind: GraphKind
+  color?: string
+  source?: string
+  description?: string
+}
+
+type UserType = {
   email: string;
   password: string;
 };
 
-export type IdType = {
+type IdType = {
   id: string;
 };
 
-export type DatasetsType = {
+type DatasetsType = {
   type: string;
   data: any[];
   label: string;
@@ -29,4 +50,9 @@ export type DatasetsType = {
   pointHoverBackgroundColor: string;
 };
 
-export type IsGraphType = "NORMAL" | "BLEND";
+type GraphType = "NORMAL" | "BLEND";
+
+export type {
+  GraphType, DatasetsType, IdType, GraphKind,
+  UserType, CreateGraphType, Graph
+}

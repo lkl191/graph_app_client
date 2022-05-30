@@ -7,29 +7,31 @@ import {
   CREATE_GRAPH,
 } from "../../components/graphql/mutation";
 import { useForm, useDataForm } from "../../utils/hooks";
-import PreviewGraph from "../../components/preview/preview-graph";
+import GraphTemplate from "../../components/graph/GraphTemplate";
 import "react-datasheet/lib/react-datasheet.css";
 import { AuthContext } from "../../context/auth";
 import { SINGLE_GRAPH } from "../../components/graphql/query";
 import { Bar } from "react-chartjs-2";
-import { DatasetsType, GraphType } from "../../types/types";
+import { DatasetsType, CreateGraphType, GraphType, Graph } from "../../types/types";
+import { User } from "firebase/auth";
 
 
-const NewCreateGraph = ({ user }) => {
+const NormalCreateGraph = ({ user }: { user: User }) => {
   //1.Stateを作る
-  const { input, onChange, onSubmit, onDefaultChange } = useForm<GraphType>(
+  const { input, onChange, onSubmit, setValues } = useForm<CreateGraphType>(
     createGraphCallback,
     {
       title: "",
       category: "",
       graphKind: "LINE",
       source: "",
-      label: [""],
-      value: [0],
+      label: ["test0", "test1", "test2"],
+      value: [0, 1, 2],
       color: "100,100,100",
       description: "",
     }
   );
+  const [graph, setGraph] = useState<Graph>()
 
   //3.MutationをBEに送る
   const [createGraph, { error }] = useMutation(CREATE_GRAPH, {
@@ -41,20 +43,14 @@ const NewCreateGraph = ({ user }) => {
     },
   });
 
-
   //2
   function createGraphCallback() {
-    input.label = inputData.label;
-    const props = inputData.value;
-    for (let i = 0; i < props.length; i++) {
-      input.value[i] = Number(props[i]);
-    }
     createGraph();
   }
 
   //datasheet
-
   const grid = [[], []];
+  // TODO: mapで生成
   const generateGrid = () => {
     for (let ii = 0; ii < 30; ii++) {
       grid[0][ii] = { value: null };
@@ -69,13 +65,7 @@ const NewCreateGraph = ({ user }) => {
 
   //1
   // データの初期値
-
-
-  const { inputData, dataChange }: any = useDataForm({
-    label: ["test00", "test01", "test02"],
-    value: [0, 1, 2],
-  });
-  const [dataSh, setDataSh] = useState(grid);
+  const [dataSheet, setDataSheet] = useState(grid);
 
   const [color, setColor] = useState({
     red: "100",
@@ -87,10 +77,26 @@ const NewCreateGraph = ({ user }) => {
   };
   useEffect(() => {
     const propsColor = `${color.red},${color.green},${color.blue}`;
-    onDefaultChange("color", propsColor);
+    setValues({ ...input, color: propsColor })
   }, [color]);
 
-  //グラフ作成エラー
+  useEffect(() => {
+    const newGraph: Graph = {
+      id: "",
+      category: "",
+      title: input.title,
+      user: { _id: "", email: "" },
+      graphKind: input.graphKind,
+      color: input.color,
+      data: input.label.map((l, i) => {
+        return { id: "", label: input.label[i], value: input.value[i] }
+      })
+    }
+    console.log(input)
+    setGraph(newGraph)
+  }, [input.title, input.color, input.graphKind, input.label, input.value])
+
+
   if (error) {
     return <p>{error.message}</p>;
   }
@@ -202,7 +208,7 @@ const NewCreateGraph = ({ user }) => {
 
       {!user && <p className="attention">ログインしてください。</p>}
 
-      <PreviewGraph graphInfo={input} inputData={inputData} />
+      {graph && <GraphTemplate graph={graph} />}
 
       <div>
         <textarea
@@ -225,25 +231,32 @@ const NewCreateGraph = ({ user }) => {
       </div>
 
       <ReactDataSheet
-        data={dataSh}
+        data={dataSheet}
         valueRenderer={(cell) => cell.value}
         className="sheet-container"
         onCellsChanged={(changes) => {
-          //console.log(changes)//入力したrow,col,valueのみ
-          const newGrid = dataSh.map((row) => [...row]);
-
           changes.forEach(({ cell, row, col, value }) => {
-            newGrid[row][col] = { ...newGrid[row][col], value };
+            dataSheet[row][col] = { value }
+            if(row == 0) {
+              // label
+              // TODO: colがinput.label.length以上ならpush
+              const newLabel = input.label.map((l, i) => {
+                if(i == col) return value
+                return l
+              })
+              console.log(newLabel)
+              setValues({...input, label: newLabel})
+            } else if (row == 1) {
+              // value
+            }
           });
-          dataChange(newGrid);
-          setDataSh(newGrid);
         }}
       />
     </div>
   );
 };
 
-const BlendCreateGraph = ({ user }) => {
+const BlendCreateGraph = ({ user }: { user: User }) => {
   let graphInfo;
   const { input, onChange, onSubmit } = useForm(blendGraphSetCallback, {
     id: "",
@@ -398,17 +411,16 @@ const BlendCreateGraph = ({ user }) => {
 };
 
 const CreateGraph = () => {
-  const user = useContext(AuthContext)
-  type CreateGraphType = "NEW" | "BLEND";
-  const [change, setChange] = useState<CreateGraphType>("NEW");
+  const { user } = useContext(AuthContext)
+  const [graphType, setGraphType] = useState<GraphType>("NORMAL");
   const changeCreateGraph = (e) => {
-    setChange(e.target.name);
+    setGraphType(e.target.name);
   };
   if (process.browser) {
     return (
       <div className="container">
         <>
-          <button className="button" name="NEW" onClick={changeCreateGraph}>
+          <button name="NORMAL" className="button" onClick={changeCreateGraph}>
             新規グラフ作成
           </button>
           <button name="BLEND" className="button" onClick={changeCreateGraph}>
@@ -417,9 +429,9 @@ const CreateGraph = () => {
         </>
 
         {(() => {
-          switch (change) {
-            case "NEW":
-              return <NewCreateGraph user={user} />;
+          switch (graphType) {
+            case "NORMAL":
+              return <NormalCreateGraph user={user} />;
             case "BLEND":
               return <BlendCreateGraph user={user} />;
           }

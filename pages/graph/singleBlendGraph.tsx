@@ -1,14 +1,11 @@
 import { useLazyQuery } from "@apollo/client";
-import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { DeleteBlendGraphProps } from "../../components/deleteGraph";
+import { DeleteBlendGraphProps } from "../../components/graph/deleteGraph";
 import { SINGLE_BLEND_GRAPH } from "../../components/graphql/query";
-import { app, AuthContext } from "../../context/auth";
+import {  AuthContext } from "../../context/auth";
 import { DatasetsType } from "../../types/types";
-
-const Auth = getAuth(app)
 
 const DeleteModal = () => {
   const router = useRouter();

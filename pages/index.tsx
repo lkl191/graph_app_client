@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import AllBlendGraph from "../components/allBlendGraph";
+import AllBlendGraph from "../components/graph/allBlendGraph";
 
-import AllGraph from "../components/allGraph";
-import { IsGraphType } from "../types/types";
+import AllGraph from "../components/graph/allGraph";
+import { GraphType } from "../types/types";
 
 const App = () => {
   
-  const [change, setChange] = useState<IsGraphType>("NORMAL")
+  const [change, setChange] = useState<GraphType>("NORMAL")
   const changeCreateGraph = (e) => {
     setChange(e.target.name);
   };

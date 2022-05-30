@@ -3,9 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { AuthContext } from "../context/auth";
-import SignIn from "../components/SignIn";
-import SignOut from "../components/SignOut";
-
+import SignIn from "./user/SignIn";
+import SignOut from "./user/SignOut";
 
 const Header = () => {
   const { user } = useContext(AuthContext)

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SEARCH_GRAPHS } from "../../components/graphql/query";
-import ShowGraphs from "../../components/showGraphs";
+import ShowGraphs from "../../components/graph/showGraphs";
 
 const SearchGraphs = () => {
   const [searchWord, setSearchWord] = useState("");

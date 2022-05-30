@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { app, AuthContext } from "../context/auth";
 import { IsGraphType } from "../types/types";
-import ShowGraphs from "../components/showGraphs";
+import ShowGraphs from "../components/graph/showGraphs";
 import { getAuth } from "firebase/auth";
 
 const Auth = getAuth(app)

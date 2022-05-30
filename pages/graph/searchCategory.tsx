@@ -2,7 +2,7 @@ import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { GRAPH_CATEGORY } from "../../components/graphql/query";
-import ShowGraphs from "../../components/showGraphs";
+import ShowGraphs from "../../components/graph/showGraphs";
 
 const SearchCate = () => {
   const [getGraph, { data }] = useLazyQuery(GRAPH_CATEGORY);
