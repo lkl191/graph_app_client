@@ -3,12 +3,9 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
-import { app, AuthContext } from "../context/auth";
-import { IsGraphType } from "../types/types";
+import { AuthContext } from "../context/auth";
 import ShowGraphs from "../components/graph/showGraphs";
-import { getAuth } from "firebase/auth";
-
-const Auth = getAuth(app)
+import { GraphType } from "../types/types";
 
 const UserGraph = () => {
   const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);
@@ -89,7 +86,7 @@ const UserBlendGraph = () => {
 };
 
 const User = () => {
-  const [change, setChange] = useState<IsGraphType>("NORMAL");
+  const [change, setChange] = useState<GraphType>("NORMAL");
   const changeCreateGraph = (e) => {
     setChange(e.target.name);
   };
