@@ -12,4 +12,10 @@ FIREBASE_APP_ID=[]
 FIREBASE_MEASUREMENT_ID=[]
 
 BACKEND_GATEWAY_URI=[]
+CPISP_ID=[]
 ```
+
+### TODO
+
+1. リファクタリング
+2. デザイン変更
