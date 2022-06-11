@@ -5,7 +5,6 @@ import AllGraph from "../components/graph/allGraph";
 import { GraphType } from "../types/types";
 
 const App = () => {
-  
   const [change, setChange] = useState<GraphType>("NORMAL")
   const changeCreateGraph = (e) => {
     setChange(e.target.name);

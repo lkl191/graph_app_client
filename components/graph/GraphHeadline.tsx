@@ -24,10 +24,18 @@ export const graphImage = (graphKind: GraphKind) => {
 
 const GraphHeadline = ({ graphs }: { graphs: Graph[] }) => {
   return (
-    <>
+    <div className="graph-card-wrapper">
       {graphs.map((e) => (
-        <div key={e.id}>
+        <div key={e.id} className="graph-card">
           <Link href={`/graph/singleGraph?id=${e.id}`}>
+            <p>{e.title}</p>
+            <Image
+              src={graphImage(e.graphKind)}
+              width="75"
+              height="75"
+            />
+          </Link>
+          {/* <Link href={`/graph/singleGraph?id=${e.id}`}>
             <a>
               <h3 className="graph-index">
                 <div className="flex">
@@ -48,10 +56,10 @@ const GraphHeadline = ({ graphs }: { graphs: Graph[] }) => {
               </h3>
             </a>
           </Link>
-          <br />
+          <br /> */}
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

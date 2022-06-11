@@ -9,13 +9,23 @@ ul {
   transition-duration: 0.4s;
   //border-radius: 10px;
   &:hover {
-    //background-color: #ccc;
     background-color: #ccc;
   }
   @include mq() {
     padding: 15px;
     margin: 10px auto;
   }
+}
+.graph-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.graph-card {
+  width: 30%;
+  padding: 5px;
+  margin: 5px;
+  border: #888 solid 1px;
+  border-radius: 5px;
 }
 a {
   text-decoration: none;
