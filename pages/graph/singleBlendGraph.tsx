@@ -1,15 +1,14 @@
 import { useLazyQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { DeleteBlendGraphProps } from "../../components/graph/deleteGraph";
 import { SINGLE_BLEND_GRAPH } from "../../components/graphql/query";
-import {  AuthContext } from "../../context/auth";
-import { DatasetsType } from "../../types/types";
+import { AuthContext } from "../../context/auth";
+import { useQueryParams } from "../../hooks/useQueryParams";
+import { BlendGraph, DatasetsType } from "../../types/types";
 
 const DeleteModal = () => {
-  const router = useRouter();
-  const id = router.query.id;
+  const id = useQueryParams("id")
   const [show, setShow] = useState(false);
   const openModal = () => {
     setShow((props) => !props);
@@ -24,31 +23,13 @@ const DeleteModal = () => {
   );
 };
 
-const Content = ({ datasets }) => {
-  return (
-    <>
-      <Bar data={datasets} />
-    </>
-  );
-};
-
-const HostContent = ({ datasets }) => {
-  return (
-    <>
-      <DeleteModal />
-      <Bar data={datasets} />
-    </>
-  );
-};
-
 const SingleBlendGraph = () => {
-  let userExact = false;
+  const [isHost, setIsHost] = useState(false)
   const { user } = useContext(AuthContext)
 
-  const router = useRouter();
-  const id = router.query.id;
+  const id = useQueryParams("id")
 
-  const [getBlendGraph, { error, data }] = useLazyQuery(SINGLE_BLEND_GRAPH, {
+  const [getBlendGraph, { error, data }] = useLazyQuery<{ singleBlendGraph: BlendGraph }>(SINGLE_BLEND_GRAPH, {
     variables: { id },
   });
   useEffect(() => {
@@ -57,19 +38,16 @@ const SingleBlendGraph = () => {
     }
   }, [id]);
 
-  let props;
   if (error) return <p>error... {error.message}</p>;
   if (data) {
-    props = data.singleBlendGraph;
-    if (user && props.userId) {
-      if (user.uid == props.userId) {
-        userExact = true;
-      }
+    const blendGraph = data.singleBlendGraph;
+    if (!isHost && user && blendGraph.userId && user.uid === blendGraph.userId) {
+      setIsHost(true)
     }
     const genLabels = () => {
-      let labels = [];
-      for (let i = 0; i < props.graphs[0].data.length; i++) {
-        labels[i] = props.graphs[0].data[i].label;
+      let labels: string[] = [];
+      for (let i = 0; i < blendGraph.graphs[0].data.length; i++) {
+        labels[i] = blendGraph.graphs[0].data[i].label;
       }
       return labels;
     };
@@ -77,14 +55,14 @@ const SingleBlendGraph = () => {
     const genDatasets = () => {
       let datasets = [];
 
-      const graph = props.graphs;
+      const graph = blendGraph.graphs;
 
       for (let i = 0; i < graph.length; i++) {
         let color = graph[i].color;
         if (!color) {
           color = "75,192,192";
         }
-        let values = [];
+        let values: number[] = [];
         for (let ii = 0; ii < graph[i].data.length; ii++) {
           values[ii] = graph[i].data[ii].value;
         }
@@ -103,20 +81,16 @@ const SingleBlendGraph = () => {
       return datasets;
     };
 
-    let datasets;
-    datasets = {
+    const datasets = {
       labels: genLabels(),
       datasets: genDatasets(),
     };
 
     return (
       <div className="container">
-        <h1>{props.title}</h1>
-        {userExact ? (
-          <HostContent datasets={datasets} />
-        ) : (
-          <Content datasets={datasets} />
-        )}
+        <h1>{blendGraph.title}</h1>
+        {isHost && <DeleteModal />}
+        <Bar data={datasets} />
       </div>
     );
   } else {

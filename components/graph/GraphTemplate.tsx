@@ -1,16 +1,12 @@
 import React from "react";
 import { Bar, Line, Pie } from "react-chartjs-2";
-import { CreateGraphType, Graph } from "../../types/types";
-import { dataArray } from "../utils/data";
+import { Graph } from "../../types/types";
+import { dataArray } from "../../utils/data";
 
 const GraphTemplate = ({ graph }: { graph: Graph }) => {
   const propsData = graph.data;
   const color = graph.color || "75,192,192";
-
-  // const chartRef = useRef(null);
-  //const base64Image = chartRef.current.chartInstance.toBase64Image();
-
-  //label, valueの配列を取得
+  
   const { labelArray, valueArray } = dataArray(propsData);
 
   let data;
@@ -20,7 +16,6 @@ const GraphTemplate = ({ graph }: { graph: Graph }) => {
       // 各ラベルを配列にすることで軸ラベルが改行されて表示される
       labels: labelArray,
       datasets: [
-        // 表示するデータセット
         {
           label: graph.title,
           data: valueArray,

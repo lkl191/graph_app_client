@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Graph, GraphKind } from "../../types/types";
 
-export const graphImage = (graphKind) => {
+export const graphImage = (graphKind: GraphKind) => {
   let imagePath;
   switch (graphKind) {
     case "BAR":
@@ -21,10 +22,10 @@ export const graphImage = (graphKind) => {
   return imagePath;
 };
 
-const ShowGraphs = ({ props }) => {
+const GraphHeadline = ({ graphs }: { graphs: Graph[] }) => {
   return (
     <>
-      {props.map((e) => (
+      {graphs.map((e) => (
         <div key={e.id}>
           <Link href={`/graph/singleGraph?id=${e.id}`}>
             <a>
@@ -54,4 +55,4 @@ const ShowGraphs = ({ props }) => {
   );
 };
 
-export default ShowGraphs;
+export default GraphHeadline;

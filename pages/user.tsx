@@ -1,20 +1,19 @@
 import { useLazyQuery } from "@apollo/client";
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { AuthContext } from "../context/auth";
-import ShowGraphs from "../components/graph/showGraphs";
-import { GraphType } from "../types/types";
+import ShowGraphs from "../components/graph/GraphHeadline";
+import { BlendGraph, Graph, GraphType } from "../types/types";
 
 const UserGraph = () => {
-  const [getMine, { data, error }] = useLazyQuery(MY_GRAPHS);
-  const user = useContext(AuthContext)
+  const [getOwnGraphs, { data, error }] = useLazyQuery<{ myGraphs: Graph[] }>(MY_GRAPHS);
+  const { user } = useContext(AuthContext)
 
-  //更新で発火
   useEffect(() => {
     if (user) {
-      getMine();
+      getOwnGraphs();
     }
   }, [user]);
 
@@ -27,7 +26,7 @@ const UserGraph = () => {
         <ShowGraphs props={props} />
         <Link href={`/graph/create-graph`}>
           <a>
-            <div className="crt_graph">＋ グラフ作成</div>
+            <div className="crt_graph">+ グラフ作成</div>
           </a>
         </Link>
       </div>
@@ -42,13 +41,12 @@ const UserGraph = () => {
 };
 
 const UserBlendGraph = () => {
-  const [getMine, { data, error }] = useLazyQuery(MY_BLEND_GRAPH);
-  const user = useContext(AuthContext)
+  const [getOwnBlendGraphs, { data, error }] = useLazyQuery<{ myBlendGraphs: BlendGraph[] }>(MY_BLEND_GRAPH);
+  const { user } = useContext(AuthContext)
 
-  //更新で発火
   useEffect(() => {
     if (user) {
-      getMine();
+      getOwnBlendGraphs();
     }
   }, [user]);
   if (error) return <p>{error.message} </p>;
@@ -85,25 +83,25 @@ const UserBlendGraph = () => {
   }
 };
 
-const User = () => {
-  const [change, setChange] = useState<GraphType>("NORMAL");
-  const changeCreateGraph = (e) => {
-    setChange(e.target.name);
-  };
+const UserGraphHandler = () => {
+  const [graphType, setGraphType] = useState<GraphType>("NORMAL");
+  const changeGraphType = useCallback((e) => {
+    setGraphType(e.target.name as GraphType);
+  }, [])
 
   return (
     <div className="container">
       <br></br>
-      <button className="button" name="NORMAL" onClick={changeCreateGraph}>
+      <button className="button" name="NORMAL" onClick={changeGraphType}>
         グラフ一覧
       </button>
-      <button className="button" name="BLEND" onClick={changeCreateGraph}>
+      <button className="button" name="BLEND" onClick={changeGraphType}>
         複合グラフ一覧
       </button>
       <section>
         <ul>
           {(() => {
-            switch (change) {
+            switch (graphType) {
               case "NORMAL":
                 return <UserGraph />;
               case "BLEND":
@@ -116,4 +114,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserGraphHandler;

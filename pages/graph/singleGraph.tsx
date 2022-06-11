@@ -9,6 +9,7 @@ import DataSheet from "../../components/data-sheet";
 import { DeleteGraphProps } from "../../components/graph/deleteGraph";
 import { AuthContext } from "../../context/auth";
 import { Graph, GraphKind } from "../../types/types";
+import { useQueryParams } from "../../hooks/useQueryParams";
 
 const DeleteModal = () => {
   const router = useRouter();
@@ -28,12 +29,10 @@ const DeleteModal = () => {
 };
 
 const SingleGraph = () => {
-  let isHost = false;
+  const [isHost, setIsHost] = useState(false)
   const { user } = useContext(AuthContext)
 
-  const router = useRouter();
-  const id = router.query.id;
-  let graph: Graph;
+  const id = useQueryParams("id")
   const [getGraph, { error, data }] = useLazyQuery<{ singleGraph: Graph }>(SINGLE_GRAPH, {
     variables: { id },
   });
@@ -46,12 +45,9 @@ const SingleGraph = () => {
   if (error) return <p>error... {error.message}</p>;
 
   if (data) {
-    graph = data.singleGraph;
-    console.log(graph)
-    if (user && graph.user) {
-      if (user.uid == graph.user._id) {
-        isHost = true;
-      }
+    const graph = data.singleGraph;
+    if (!isHost && user && graph.user && user.uid === graph.user._id) {
+      setIsHost(true)
     }
     return (
       <div>
@@ -69,18 +65,12 @@ const SingleGraph = () => {
                 <a className="button">{graph.category}</a>
               </Link>
             )}
-            <p>{graph.id}</p>
             {graph.description ? <p>{graph.description}</p> : <p></p>}
             {graph.source ? (
               <p>
                 <a href={`${graph.source}`} target="blank">
                   <span className="href">source URL</span>
                 </a>
-                {/* 
-                <span className="right">
-                  <button className="button change_btn">変更</button>
-                </span>
-                */}
               </p>
             ) : (
               <p>source URL not found</p>

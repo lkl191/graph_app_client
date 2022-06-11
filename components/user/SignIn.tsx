@@ -5,14 +5,13 @@ import { useMutation } from "@apollo/client";
 import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider, signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { app } from "../../context/auth";
 import { LOGIN, SIGNIN } from "../graphql/mutation";
-import { useForm } from "../../utils/hooks";
+import { useForm } from "../../hooks/useOnChange";
 import Link from "next/link";
 
 
-//Google
 const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider;
-  const Auth = getAuth(app)// グローバル変数ではエラー
+  const Auth = getAuth(app)
   
   signInWithPopup(Auth, provider)
     .then((user) => {
@@ -35,8 +34,7 @@ const signInWithGoogle = async () => {
 //Github
 const signInWithGithub = async () => {
   const provider = new GithubAuthProvider;
-  //await Auth.signInWithPopup(provider);
-  const Auth = getAuth(app)// グローバル変数ではエラー
+  const Auth = getAuth(app)
   signInWithPopup(Auth, provider)
     .then((user) => {
       console.log(user)

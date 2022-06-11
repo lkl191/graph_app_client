@@ -1,6 +1,6 @@
 type GraphKind = "LINE" | "BAR" | "PIE" | "RADAR";
 
-interface CreateGraphType {
+type CreateGraphType = {
   title: string;
   category: string;
   graphKind: GraphKind;
@@ -11,25 +11,32 @@ interface CreateGraphType {
   description: string;
 };
 
-interface Graph {
-  id: string
-  title: string
-  category: string
+type Graph = {
+  id: string;
+  title: string;
+  category: string;
   data: {
-    id: string
-    label: string
-    value: number
-  }[]
+    id: string;
+    label: string;
+    value: number;
+  }[];
   user: {
-    _id: string
-    email: string
-    username?: string
-  }
-  graphKind: GraphKind
-  color?: string
-  source?: string
-  description?: string
-}
+    _id: string;
+    email: string;
+    username?: string;
+  };
+  graphKind: GraphKind;
+  color?: string;
+  source?: string;
+  description?: string;
+};
+
+type BlendGraph = {
+  id: string;
+  title: string;
+  userId: string;
+  graphs: Graph[];
+};
 
 type UserType = {
   email: string;
@@ -42,7 +49,7 @@ type IdType = {
 
 type DatasetsType = {
   type: string;
-  data: any[];
+  data: number[];
   label: string;
   backgroundColor: string;
   borderColor: string;
@@ -53,6 +60,12 @@ type DatasetsType = {
 type GraphType = "NORMAL" | "BLEND";
 
 export type {
-  GraphType, DatasetsType, IdType, GraphKind,
-  UserType, CreateGraphType, Graph
-}
+  GraphType,
+  DatasetsType,
+  IdType,
+  GraphKind,
+  UserType,
+  CreateGraphType,
+  Graph,
+  BlendGraph,
+};

@@ -153,6 +153,7 @@ export const ALL_BLEND_GRAPH = gql`
   query allBlendGraphs {
     allBlendGraphs {
       id
+      userId
       graphId
       title
     }

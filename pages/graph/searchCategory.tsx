@@ -1,14 +1,14 @@
 import { useLazyQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { GRAPH_CATEGORY } from "../../components/graphql/query";
-import ShowGraphs from "../../components/graph/showGraphs";
+import GraphHeadline from "../../components/graph/GraphHeadline";
+import { useQueryParams } from "../../hooks/useQueryParams";
+import { Graph } from "../../types/types";
 
 const SearchCate = () => {
-  const [getGraph, { data }] = useLazyQuery(GRAPH_CATEGORY);
+  const [getGraph, { data, error, loading }] = useLazyQuery<{ graphCate: Graph[] }>(GRAPH_CATEGORY);
 
-  const router = useRouter();
-  const category = router.query.category;
+  const category = useQueryParams("category")
 
   useEffect(() => {
     if (category) {
@@ -18,18 +18,21 @@ const SearchCate = () => {
     }
   }, [category]);
 
+  if (error) return <div className="container">Error</div>
+  if (loading) return <div className="container">Loading...</div>
+
   if (data) {
-    const props = data.graphCate;
+    const graphs = data.graphCate;
     return (
       <div className="container">
         <p>
-          {`"`}{category}{`"`}の検索結果 {props.length}件
+          {`"`}{category}{`"`}の検索結果 {graphs.length}件
         </p>
-        <ShowGraphs props={props} />
+        <GraphHeadline graphs={graphs} />
       </div>
     );
   } else {
-    return <div className="container">Loading...</div>;
+    return null
   }
 };
 

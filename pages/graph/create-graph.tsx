@@ -6,7 +6,7 @@ import {
   CREATE_BLEND_GRAPH,
   CREATE_GRAPH,
 } from "../../components/graphql/mutation";
-import { useForm, useDataForm } from "../../utils/hooks";
+import { useForm } from "../../hooks/useOnChange";
 import GraphTemplate from "../../components/graph/GraphTemplate";
 import "react-datasheet/lib/react-datasheet.css";
 import { AuthContext } from "../../context/auth";
@@ -17,7 +17,6 @@ import { User } from "firebase/auth";
 
 
 const NormalCreateGraph = ({ user }: { user: User }) => {
-  //1.Stateを作る
   const { input, onChange, onSubmit, setValues } = useForm<CreateGraphType>(
     createGraphCallback,
     {
@@ -33,24 +32,19 @@ const NormalCreateGraph = ({ user }: { user: User }) => {
   );
   const [graph, setGraph] = useState<Graph>()
 
-  //3.MutationをBEに送る
   const [createGraph, { error }] = useMutation(CREATE_GRAPH, {
     variables: input,
-    //Mutationの実行後
     onCompleted() {
       location.href = "/";
       console.log("graph is created");
     },
   });
 
-  //2
   function createGraphCallback() {
     createGraph();
   }
 
-  //datasheet
   const grid = [[], []];
-  // TODO: mapで生成
   const generateGrid = () => {
     for (let ii = 0; ii < 30; ii++) {
       grid[0][ii] = { value: null };
@@ -63,8 +57,6 @@ const NormalCreateGraph = ({ user }: { user: User }) => {
   };
   generateGrid();
 
-  //1
-  // データの初期値
   const [dataSheet, setDataSheet] = useState(grid);
 
   const [color, setColor] = useState({
@@ -237,15 +229,13 @@ const NormalCreateGraph = ({ user }: { user: User }) => {
         onCellsChanged={(changes) => {
           changes.forEach(({ cell, row, col, value }) => {
             dataSheet[row][col] = { value }
-            if(row == 0) {
-              // label
-              // TODO: colがinput.label.length以上ならpush
+            if (row == 0) {
               const newLabel = input.label.map((l, i) => {
-                if(i == col) return value
+                if (i == col) return value
                 return l
               })
               console.log(newLabel)
-              setValues({...input, label: newLabel})
+              setValues({ ...input, label: newLabel })
             } else if (row == 1) {
               // value
             }
@@ -276,7 +266,6 @@ const BlendCreateGraph = ({ user }: { user: User }) => {
       graphId: idArray,
       title,
     },
-    //Mutationの実行後
     onCompleted() {
       location.href = "/";
       console.log("graph is created");
@@ -413,20 +402,18 @@ const BlendCreateGraph = ({ user }: { user: User }) => {
 const CreateGraph = () => {
   const { user } = useContext(AuthContext)
   const [graphType, setGraphType] = useState<GraphType>("NORMAL");
-  const changeCreateGraph = (e) => {
-    setGraphType(e.target.name);
+  const changeGraphType = (e) => {
+    setGraphType(e.target.name as GraphType);
   };
   if (process.browser) {
     return (
       <div className="container">
-        <>
-          <button name="NORMAL" className="button" onClick={changeCreateGraph}>
-            新規グラフ作成
-          </button>
-          <button name="BLEND" className="button" onClick={changeCreateGraph}>
-            グラフを重ねる
-          </button>
-        </>
+        <button name="NORMAL" className="button" onClick={changeGraphType}>
+          新規グラフ作成
+        </button>
+        <button name="BLEND" className="button" onClick={changeGraphType}>
+          グラフを重ねる
+        </button>
 
         {(() => {
           switch (graphType) {

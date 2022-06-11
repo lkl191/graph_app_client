@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDataSheet from "react-datasheet";
 
-import { putValue } from "./utils/data";
+import { putValue } from "../utils/data";
 import "react-datasheet/lib/react-datasheet.css";
 import { Graph } from "../types/types";
 

@@ -1,48 +1,47 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { SEARCH_GRAPHS } from "../../components/graphql/query";
-import ShowGraphs from "../../components/graph/showGraphs";
+import GraphHeadline from "../../components/graph/GraphHeadline";
+import { useQueryParams } from "../../hooks/useQueryParams";
+import { Graph } from "../../types/types";
 
 const SearchGraphs = () => {
   const [searchWord, setSearchWord] = useState("");
-  const [getGraph, { data }] = useLazyQuery(SEARCH_GRAPHS);
+  const [getGraph, { data, error, loading }] = useLazyQuery<{ searchGraphs: Graph[] }>(SEARCH_GRAPHS);
 
-  const router = useRouter();
-  const word = router.query.word;
+  const word = useQueryParams("word")
 
   useEffect(() => {
     getGraph({
       variables: { searchWord: word },
     });
   }, [word]);
+  if (error) return <div className="container">error</div>
+  if (loading) return <div className="container">Loading...</div>
 
-  let props;
   if (data) {
-    props = data.searchGraphs;
+    const graphs = data.searchGraphs;
+    return (
+      <div className="container">
+        <input
+          type="text"
+          className="input_text search_input"
+          placeholder="Search Graph"
+          onChange={(e) => setSearchWord(e.target.value)}
+        />
+
+        <Link href={`/graph/searchGraphs?word=${searchWord}`}>
+          <button className="button">検索</button>
+        </Link>
+        <p>{`"`}{word}{`"`}の検索結果 {graphs.length}件</p>
+        <GraphHeadline graphs={graphs} />
+      </div>
+    );
+  } else {
+    return null
   }
 
-  return (
-    <div className="container">
-      <input
-        type="text"
-        className="input_text search_input"
-        placeholder="Search Graph"
-        onChange={(e) => setSearchWord(e.target.value)}
-      />
-
-      <Link href={`/graph/searchGraphs?word=${searchWord}`}>
-        <button className="button">検索</button>
-      </Link>
-      {props && (
-        <>
-          <p>{`"`}{word}{`"`}の検索結果 {props.length}件</p>
-          <ShowGraphs props={props} />
-        </>
-      )}
-    </div>
-  );
 };
 
 export default SearchGraphs;
