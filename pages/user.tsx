@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import { MY_BLEND_GRAPH, MY_GRAPHS } from "../components/graphql/query";
 import { AuthContext } from "../context/auth";
-import ShowGraphs from "../components/graph/GraphHeadline";
+import GraphHeadline from "../components/graph/GraphHeadline";
 import { BlendGraph, Graph, GraphType } from "../types/types";
 
 const UserGraph = () => {
@@ -19,11 +19,11 @@ const UserGraph = () => {
 
   if (error) return <p>{error.message} </p>;
   if (data) {
-    const props = data.myGraphs;
+    const graphs = data.myGraphs;
     return (
       <div className="container">
         <h2>My Graph</h2>
-        <ShowGraphs props={props} />
+        <GraphHeadline graphs={graphs} />
         <Link href={`/graph/create-graph`}>
           <a>
             <div className="crt_graph">+ グラフ作成</div>
