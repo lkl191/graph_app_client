@@ -26,7 +26,7 @@ const GraphHeadline = ({ graphs }: { graphs: Graph[] }) => {
   return (
     <div className="graph-card-wrapper">
       {graphs.map((e) => (
-        <Link href={`/graph/singleGraph?id=${e.id}`} className="">
+        <Link href={`/graph/singleGraph?id=${e.id}`} key={e.id} className="">
           <div key={e.id} className="graph-card">
             <h3>{e.title}</h3>
             <p className="graph-description">{e.description}</p>
