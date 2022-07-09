@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Graph, GraphKind } from "../../types/types";
 
 export const graphImage = (graphKind: GraphKind) => {
-  let imagePath;
+  let imagePath: string;
   switch (graphKind) {
     case "BAR":
       imagePath = "/Graphs/bar.png";
