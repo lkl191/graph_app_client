@@ -26,6 +26,10 @@ ul {
   margin: 5px;
   border: #888 solid 1px;
   border-radius: 5px;
+  cursor: pointer;
+}
+.graph-description {
+  color: #888;
 }
 a {
   text-decoration: none;
@@ -35,25 +39,6 @@ a {
   &:visited {
     color: black;
   }
-}
-
-.graph_title{
-  font-size: $index-title;
-  @include mq() {
-    font-size: 15px
-  }
-}
-
-.graph_desc {
-  font-size: 17px;
-  color: #bbb;
-  @include mq() {
-    font-size: 15px;
-  }
-}
-.graph_image{
-  background-color: #fff;
-  margin-right: 30px;
 }
 
 .other-title {

@@ -8,6 +8,7 @@ module.exports = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
     BACKEND_GATEWAY_URI: process.env.BACKEND_GATEWAY_URI,
+    NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
     CPISP_ID: process.env.CPISP_ID
   },
   images: {
